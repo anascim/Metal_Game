@@ -7,26 +7,25 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		8C02230F23D00F5700CB30AE /* Shaders.metal in Sources */ = {isa = PBXBuildFile; fileRef = 8C02230E23D00F5700CB30AE /* Shaders.metal */; };
 		8C9D000423C40FE300864E03 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C9D000323C40FE300864E03 /* AppDelegate.swift */; };
-		8C9D000723C40FE400864E03 /* Renderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C9D000623C40FE400864E03 /* Renderer.swift */; };
 		8C9D000923C40FE400864E03 /* GameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C9D000823C40FE400864E03 /* GameViewController.swift */; };
-		8C9D000B23C40FE400864E03 /* Shaders.metal in Sources */ = {isa = PBXBuildFile; fileRef = 8C9D000A23C40FE400864E03 /* Shaders.metal */; };
 		8C9D000E23C40FE400864E03 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8C9D000C23C40FE400864E03 /* Main.storyboard */; };
 		8C9D001023C40FE900864E03 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8C9D000F23C40FE900864E03 /* Assets.xcassets */; };
 		8C9D001323C40FE900864E03 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8C9D001123C40FE900864E03 /* LaunchScreen.storyboard */; };
+		8C9D001F23CFC39F00864E03 /* Renderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C9D001E23CFC39F00864E03 /* Renderer.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		8C02230E23D00F5700CB30AE /* Shaders.metal */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.metal; path = Shaders.metal; sourceTree = "<group>"; };
 		8C9D000023C40FE300864E03 /* MetalGame.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MetalGame.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		8C9D000323C40FE300864E03 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		8C9D000523C40FE300864E03 /* ShaderTypes.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ShaderTypes.h; sourceTree = "<group>"; };
-		8C9D000623C40FE400864E03 /* Renderer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Renderer.swift; sourceTree = "<group>"; };
 		8C9D000823C40FE400864E03 /* GameViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameViewController.swift; sourceTree = "<group>"; };
-		8C9D000A23C40FE400864E03 /* Shaders.metal */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.metal; path = Shaders.metal; sourceTree = "<group>"; };
 		8C9D000D23C40FE400864E03 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		8C9D000F23C40FE900864E03 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		8C9D001223C40FE900864E03 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		8C9D001423C40FE900864E03 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		8C9D001E23CFC39F00864E03 /* Renderer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Renderer.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -52,10 +51,9 @@
 			isa = PBXGroup;
 			children = (
 				8C9D000323C40FE300864E03 /* AppDelegate.swift */,
-				8C9D000523C40FE300864E03 /* ShaderTypes.h */,
-				8C9D000623C40FE400864E03 /* Renderer.swift */,
 				8C9D000823C40FE400864E03 /* GameViewController.swift */,
-				8C9D000A23C40FE400864E03 /* Shaders.metal */,
+				8C9D001E23CFC39F00864E03 /* Renderer.swift */,
+				8C02230E23D00F5700CB30AE /* Shaders.metal */,
 				8C9D000C23C40FE400864E03 /* Main.storyboard */,
 				8C9D000F23C40FE900864E03 /* Assets.xcassets */,
 				8C9D001123C40FE900864E03 /* LaunchScreen.storyboard */,
@@ -143,9 +141,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				8C9D000B23C40FE400864E03 /* Shaders.metal in Sources */,
-				8C9D000723C40FE400864E03 /* Renderer.swift in Sources */,
+				8C02230F23D00F5700CB30AE /* Shaders.metal in Sources */,
 				8C9D000923C40FE400864E03 /* GameViewController.swift in Sources */,
+				8C9D001F23CFC39F00864E03 /* Renderer.swift in Sources */,
 				8C9D000423C40FE300864E03 /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -299,7 +297,6 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = AlexNascimento.MetalGame;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_OBJC_BRIDGING_HEADER = "$(TARGET_NAME)/ShaderTypes.h";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -318,7 +315,6 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = AlexNascimento.MetalGame;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_OBJC_BRIDGING_HEADER = "$(TARGET_NAME)/ShaderTypes.h";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
