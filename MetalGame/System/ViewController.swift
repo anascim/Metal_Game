@@ -10,7 +10,7 @@ import UIKit
 import MetalKit
 
 
-class GameViewController: UIViewController {
+class ViewController: UIViewController {
 
     var renderer: Renderer!
     
@@ -29,6 +29,7 @@ class GameViewController: UIViewController {
         
         mtkView.device = defaultDevice
         mtkView.colorPixelFormat = .bgra8Unorm
+        mtkView.depthStencilPixelFormat = .depth32Float
         mtkView.backgroundColor = .white
         
         renderer = Renderer(mtkView: mtkView)
