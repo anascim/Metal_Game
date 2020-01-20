@@ -9,8 +9,8 @@
 /* Begin PBXBuildFile section */
 		8C02230F23D00F5700CB30AE /* Shaders.metal in Sources */ = {isa = PBXBuildFile; fileRef = 8C02230E23D00F5700CB30AE /* Shaders.metal */; };
 		8C02231123D0DE2800CB30AE /* MathUtilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C02231023D0DE2800CB30AE /* MathUtilities.swift */; };
+		8C03EEF323D512900015C975 /* Types.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C03EEF223D512900015C975 /* Types.swift */; };
 		8C52AF9123D395BE0045D07E /* Scene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C52AF9023D395BE0045D07E /* Scene.swift */; };
-		8C52AF9323D395E40045D07E /* Node.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C52AF9223D395E40045D07E /* Node.swift */; };
 		8C52AF9523D395EA0045D07E /* Cube.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C52AF9423D395EA0045D07E /* Cube.swift */; };
 		8C52AF9723D396CD0045D07E /* GameScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C52AF9623D396CD0045D07E /* GameScene.swift */; };
 		8C9D000423C40FE300864E03 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C9D000323C40FE300864E03 /* AppDelegate.swift */; };
@@ -24,8 +24,8 @@
 /* Begin PBXFileReference section */
 		8C02230E23D00F5700CB30AE /* Shaders.metal */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.metal; path = Shaders.metal; sourceTree = "<group>"; };
 		8C02231023D0DE2800CB30AE /* MathUtilities.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MathUtilities.swift; sourceTree = "<group>"; };
+		8C03EEF223D512900015C975 /* Types.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Types.swift; sourceTree = "<group>"; };
 		8C52AF9023D395BE0045D07E /* Scene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Scene.swift; sourceTree = "<group>"; };
-		8C52AF9223D395E40045D07E /* Node.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Node.swift; sourceTree = "<group>"; };
 		8C52AF9423D395EA0045D07E /* Cube.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Cube.swift; sourceTree = "<group>"; };
 		8C52AF9623D396CD0045D07E /* GameScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameScene.swift; sourceTree = "<group>"; };
 		8C9D000023C40FE300864E03 /* MetalGame.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MetalGame.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -58,15 +58,6 @@
 			path = System;
 			sourceTree = "<group>";
 		};
-		8C52AF9923D397090045D07E /* Nodes */ = {
-			isa = PBXGroup;
-			children = (
-				8C52AF9223D395E40045D07E /* Node.swift */,
-				8C52AF9423D395EA0045D07E /* Cube.swift */,
-			);
-			path = Nodes;
-			sourceTree = "<group>";
-		};
 		8C9D000123C40FE300864E03 /* Products */ = {
 			isa = PBXGroup;
 			children = (
@@ -80,10 +71,11 @@
 			children = (
 				8C52AF9823D396E90045D07E /* System */,
 				8C9D001E23CFC39F00864E03 /* Renderer.swift */,
-				8C52AF9923D397090045D07E /* Nodes */,
+				8C52AF9423D395EA0045D07E /* Cube.swift */,
 				8C52AF9023D395BE0045D07E /* Scene.swift */,
 				8C52AF9623D396CD0045D07E /* GameScene.swift */,
 				8C02230E23D00F5700CB30AE /* Shaders.metal */,
+				8C03EEF223D512900015C975 /* Types.swift */,
 				8C02231023D0DE2800CB30AE /* MathUtilities.swift */,
 				8C9D000C23C40FE400864E03 /* Main.storyboard */,
 				8C9D000F23C40FE900864E03 /* Assets.xcassets */,
@@ -175,12 +167,12 @@
 				8C02230F23D00F5700CB30AE /* Shaders.metal in Sources */,
 				8C9D000923C40FE400864E03 /* ViewController.swift in Sources */,
 				8C52AF9123D395BE0045D07E /* Scene.swift in Sources */,
+				8C03EEF323D512900015C975 /* Types.swift in Sources */,
 				8C52AF9723D396CD0045D07E /* GameScene.swift in Sources */,
 				8C9D001F23CFC39F00864E03 /* Renderer.swift in Sources */,
 				8C52AF9523D395EA0045D07E /* Cube.swift in Sources */,
 				8C9D000423C40FE300864E03 /* AppDelegate.swift in Sources */,
 				8C02231123D0DE2800CB30AE /* MathUtilities.swift in Sources */,
-				8C52AF9323D395E40045D07E /* Node.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

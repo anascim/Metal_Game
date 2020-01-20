@@ -11,33 +11,29 @@
 
 import MetalKit
 
-struct Vertex {
-    var position: vector_float4
-    var color: vector_float4
-}
-
-struct Uniforms {
-    var modelViewProjectionMatrix: float4x4
-    var xOffset: Float
-}
-
-class Renderer: NSObject, MTKViewDelegate {
+class Renderer : NSObject {
    
     let device: MTLDevice
+    let view: MTKView
     let commandQueue: MTLCommandQueue
-    let vertexBuffer: MTLBuffer
-    let indexBuffer: MTLBuffer
-    var uniforms = Uniforms(modelViewProjectionMatrix: float4x4.init(), xOffset: 0.3)
-    let renderPipeline: MTLRenderPipelineState
     
-    var depthState: MTLDepthStencilState
+    var pipelineState: MTLRenderPipelineState!
+    var depthStencilState: MTLDepthStencilState?
+    
+    var cube: Cube
+    var cube2: Cube
+    var cube3: Cube
+    
+    var uniforms1: Uniforms!
+    var uniforms2: Uniforms!
+    var uniforms3: Uniforms!
+    
     var time: Float = 0
     
-    let cube = Cube()
-    
     init?(mtkView: MTKView){
+        self.view = mtkView
         if let mtkDevice = mtkView.device {
-            device = mtkDevice
+            self.device = mtkDevice
         } else {
             print("MTKView doesn't have a device")
             return nil
@@ -47,20 +43,17 @@ class Renderer: NSObject, MTKViewDelegate {
             commandQueue = newCommandQueue
         } else { fatalError("Couldn't make command queue!") }
         
-        if let newVertexBuffer = device.makeBuffer(bytes: cube.vertices, length: MemoryLayout<Vertex>.size * cube.vertices.count, options: .cpuCacheModeWriteCombined) {
-            vertexBuffer = newVertexBuffer
-        } else { fatalError("Couldn't make vertex buffer!") }
+        cube = Cube(device: device, mtkView: mtkView)
+        cube2 = Cube(device: device, mtkView: mtkView)
+        cube3 = Cube(device: device, mtkView: mtkView)
         
-        if let newIndexBuffer = device.makeBuffer(bytes: cube.indices, length: MemoryLayout<UInt16>.size * cube.indices.count, options: .cpuCacheModeWriteCombined) {
-            indexBuffer = newIndexBuffer
-        } else { fatalError("Couldn't make index buffer!") }
-        renderPipeline = Renderer.buildRenderPipeline(device: device, mtkView: mtkView)
-        depthState = Renderer.buildDepthState(device: device)
         super.init()
+        self.buildPipeline()
+        self.buildDepthState()
     }
     
-    static func buildRenderPipeline(device: MTLDevice, mtkView: MTKView) -> MTLRenderPipelineState {
-        guard let library = device.makeDefaultLibrary() else {
+    private func buildPipeline() {
+        guard let library = self.device.makeDefaultLibrary() else {
             fatalError("Couldn't find default library!")
         }
         let vertexFunction = library.makeFunction(name: "vertex_function")
@@ -70,33 +63,47 @@ class Renderer: NSObject, MTKViewDelegate {
         renderPipelineDescriptor.vertexFunction = vertexFunction
         renderPipelineDescriptor.fragmentFunction = fragmentFunction
         
-        renderPipelineDescriptor.colorAttachments[0].pixelFormat = mtkView.colorPixelFormat
+        renderPipelineDescriptor.colorAttachments[0].pixelFormat = self.view.colorPixelFormat
         renderPipelineDescriptor.depthAttachmentPixelFormat = .depth32Float
         
+        let vertexDescriptor = MTLVertexDescriptor()
+        vertexDescriptor.attributes[0].format = .float3
+        vertexDescriptor.attributes[0].offset = 0
+        vertexDescriptor.attributes[0].bufferIndex = 0
+        vertexDescriptor.attributes[1].format = .float4
+        vertexDescriptor.attributes[1].offset = MemoryLayout<SIMD3<Float>>.stride
+        vertexDescriptor.attributes[1].bufferIndex = 0
+        vertexDescriptor.layouts[0].stride = MemoryLayout<Vertex>.stride
+        
+        renderPipelineDescriptor.vertexDescriptor = vertexDescriptor
         do {
-            return try device.makeRenderPipelineState(descriptor: renderPipelineDescriptor)
+            try self.pipelineState = device.makeRenderPipelineState(descriptor: renderPipelineDescriptor)
         } catch {
             fatalError("Couldn't make MTLRenderPipelineState: \(error)")
         }
     }
     
-    static func buildDepthState(device: MTLDevice) -> MTLDepthStencilState {
+    private func buildDepthState() {
         let depthStencilDescriptor = MTLDepthStencilDescriptor()
         depthStencilDescriptor.isDepthWriteEnabled = true
         depthStencilDescriptor.depthCompareFunction = .less
         
-        return device.makeDepthStencilState(descriptor: depthStencilDescriptor)!
+        self.depthStencilState = self.device.makeDepthStencilState(descriptor: depthStencilDescriptor)!
     }
     
-    func update(in view: MTKView) {
+    func updateUniforms(in view: MTKView) {
         time += 1.0/Float(view.preferredFramesPerSecond)
         
-        let scaleFactor = sinf(time * 5) * 0.25 + 1
-        let rotationAmount = time
-        let rotationX = float4x4(rotationAbout: [1, 0, 0], by: rotationAmount)
-        let rotationY = float4x4(rotationAbout: [0, 1, 0], by: rotationAmount)
-        let scale = float4x4(scaleBy: scaleFactor)
-        let modelMatrix = rotationX * rotationY * scale
+        let rotationX = matrix_float4x4(rotationAbout: [1,0,0], by: time)
+        let rotationY = matrix_float4x4(rotationAbout: [0,1,0], by: time)
+        let scale = matrix_float4x4(scaleBy: 0.1)
+        let pulsating = sin(time*4)*0.5 + 3
+        let pulsatingScale = matrix_float4x4(scaleBy: pulsating)
+        let pulsatingRotationX = matrix_float4x4(rotationAbout: [1,0,0], by: pulsating)
+        let pulsatingRotationY = matrix_float4x4(rotationAbout: [0,1,0], by: pulsating)
+        let modelMatrix1 = rotationX * rotationY * matrix_float4x4(translationBy: [-1, 1, 0]) * scale
+        let modelMatrix2 = matrix_float4x4(translationBy: [1, 1, 0]) * scale * rotationX * rotationY
+        let modelMatrix3 = matrix_float4x4(translationBy: [0, 0, 0]) * scale * pulsatingScale * pulsatingRotationX * pulsatingRotationY
         
         let cameraTranslation = SIMD3<Float>(0, 0,-5)
         let viewMatrix = float4x4(translationBy: cameraTranslation)
@@ -107,28 +114,49 @@ class Renderer: NSObject, MTKViewDelegate {
         let far: Float = 100
         let projectionMatrix = float4x4(perspectiveProjectionFov: fov, aspectRatio: aspect, nearZ: near, farZ: far)
         
-        let mvpMatrix = projectionMatrix * viewMatrix * modelMatrix
-        self.uniforms = Uniforms(modelViewProjectionMatrix: mvpMatrix, xOffset: 0)
+        let mvpMatrix1 = projectionMatrix * viewMatrix * modelMatrix1
+        let mvpMatrix2 = projectionMatrix * viewMatrix * modelMatrix2
+        let mvpMatrix3 = projectionMatrix * viewMatrix * modelMatrix3
+        self.uniforms1 = Uniforms(modelViewProjectionMatrix: mvpMatrix1, xOffset: 0)
+        self.uniforms2 = Uniforms(modelViewProjectionMatrix: mvpMatrix2, xOffset: 0)
+        self.uniforms3 = Uniforms(modelViewProjectionMatrix: mvpMatrix3, xOffset: 0)
     }
+}
+
+extension Renderer : MTKViewDelegate {
     
     func draw(in view: MTKView) {
-        update(in: view)
+        updateUniforms(in: view)
         
-        guard let commandBuffer = commandQueue.makeCommandBuffer() else { return }
-        if let renderPassDescriptor = view.currentRenderPassDescriptor, let drawable = view.currentDrawable {
-            renderPassDescriptor.colorAttachments[0].clearColor = .init(red: 0.7, green: 0.12, blue: 0.0, alpha: 1.0)
-            guard let commandEncoder = commandBuffer.makeRenderCommandEncoder(descriptor: renderPassDescriptor) else { return }
-            commandEncoder.setRenderPipelineState(renderPipeline)
-            commandEncoder.setDepthStencilState(depthState)
-            commandEncoder.setFrontFacing(.counterClockwise)
-            commandEncoder.setCullMode(.back)
-            commandEncoder.setVertexBuffer(vertexBuffer, offset: 0, index: 0)
-            commandEncoder.setVertexBytes(&uniforms, length: MemoryLayout<Uniforms>.stride, index: 1)
-            commandEncoder.drawIndexedPrimitives(type: .triangle, indexCount: cube.indices.count, indexType: .uint16, indexBuffer: indexBuffer, indexBufferOffset: 0)
-            commandEncoder.endEncoding()
-            commandBuffer.present(drawable)
-            commandBuffer.commit()
-        }
+        guard let commandBuffer = commandQueue.makeCommandBuffer(),
+        let renderPassDescriptor = view.currentRenderPassDescriptor,
+        let drawable = view.currentDrawable else { return }
+    
+        renderPassDescriptor.colorAttachments[0].clearColor = .init(red: 0.7, green: 0.12, blue: 0.0, alpha: 1.0)
+    
+        guard let commandEncoder = commandBuffer.makeRenderCommandEncoder(descriptor: renderPassDescriptor) else { return }
+        
+        commandEncoder.setFrontFacing(.counterClockwise)
+        commandEncoder.setCullMode(.back)
+        commandEncoder.setDepthStencilState(depthStencilState)
+        commandEncoder.setRenderPipelineState(pipelineState)
+        
+        commandEncoder.setVertexBuffer(cube.vertexBuffer, offset: 0, index: 0)
+        commandEncoder.setVertexBytes(&uniforms1, length: MemoryLayout<Uniforms>.stride, index: 1)
+        commandEncoder.drawIndexedPrimitives(type: .triangle, indexCount: cube.indices.count, indexType: .uint16, indexBuffer: cube.indexBuffer, indexBufferOffset: 0)
+        
+        commandEncoder.setVertexBuffer(cube2.vertexBuffer, offset: 0, index: 0)
+        commandEncoder.setVertexBytes(&uniforms2, length: MemoryLayout<Uniforms>.stride, index: 1)
+        commandEncoder.drawIndexedPrimitives(type: .triangle, indexCount: cube2.indices.count, indexType: .uint16, indexBuffer: cube2.indexBuffer, indexBufferOffset: 0)
+        
+        commandEncoder.setVertexBuffer(cube3.vertexBuffer, offset: 0, index: 0)
+        commandEncoder.setVertexBytes(&uniforms3, length: MemoryLayout<Uniforms>.stride, index: 1)
+        commandEncoder.drawIndexedPrimitives(type: .triangle, indexCount: cube3.indices.count, indexType: .uint16, indexBuffer: cube3.indexBuffer, indexBufferOffset: 0)
+        
+        commandEncoder.endEncoding()
+    
+        commandBuffer.present(drawable)
+        commandBuffer.commit()
     }
     
     func mtkView(_ view: MTKView, drawableSizeWillChange size: CGSize) {

@@ -8,9 +8,6 @@
 
 import MetalKit
 
-class Scene : Node {
+class Scene {
     
-    override init() {
-        super.init()
-    }
 }

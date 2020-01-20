@@ -9,9 +9,15 @@
 #include <metal_stdlib>
 using namespace metal;
 
-struct Vertex
+struct VertexIn
 {
-    float4 position [[position]];
+    float4 position [[ attribute(0) ]];
+    float4 color [[ attribute(1) ]];
+};
+
+struct VertexOut
+{
+    float4 position [[ position ]];
     float4 color;
 };
 
@@ -21,18 +27,17 @@ struct Uniforms
     float xOffset;
 };
 
-vertex Vertex vertex_function(const device Vertex *vertices[[buffer(0)]],
-                              constant Uniforms &uniforms[[buffer(1)]],
-                              uint vid [[vertex_id]])
+vertex VertexOut vertex_function(const VertexIn vertexIn[[ stage_in ]],
+                              constant Uniforms &uniforms[[buffer(1)]])
 {
-    Vertex out;
-    out.position = uniforms.modelViewProjectionMatrix * vertices[vid].position;
+    VertexOut out;
+    out.position = uniforms.modelViewProjectionMatrix * vertexIn.position;
     out.position[0] += uniforms.xOffset;
-    out.color = vertices[vid].color;
+    out.color = vertexIn.color;
     return out;
 }
 
-fragment float4 fragment_function(Vertex inVertex[[stage_in]])
+fragment float4 fragment_function(VertexOut vertexIn [[stage_in]])
 {
-    return inVertex.color;
+    return vertexIn.color;
 }
