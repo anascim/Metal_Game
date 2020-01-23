@@ -11,7 +11,7 @@
 		8C02231123D0DE2800CB30AE /* MathUtilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C02231023D0DE2800CB30AE /* MathUtilities.swift */; };
 		8C03EEF323D512900015C975 /* Types.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C03EEF223D512900015C975 /* Types.swift */; };
 		8C52AF9123D395BE0045D07E /* Scene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C52AF9023D395BE0045D07E /* Scene.swift */; };
-		8C52AF9523D395EA0045D07E /* Cube.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C52AF9423D395EA0045D07E /* Cube.swift */; };
+		8C52AF9523D395EA0045D07E /* BufferedCube.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C52AF9423D395EA0045D07E /* BufferedCube.swift */; };
 		8C52AF9723D396CD0045D07E /* GameScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C52AF9623D396CD0045D07E /* GameScene.swift */; };
 		8C9D000423C40FE300864E03 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C9D000323C40FE300864E03 /* AppDelegate.swift */; };
 		8C9D000923C40FE400864E03 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C9D000823C40FE400864E03 /* ViewController.swift */; };
@@ -19,6 +19,10 @@
 		8C9D001023C40FE900864E03 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8C9D000F23C40FE900864E03 /* Assets.xcassets */; };
 		8C9D001323C40FE900864E03 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8C9D001123C40FE900864E03 /* LaunchScreen.storyboard */; };
 		8C9D001F23CFC39F00864E03 /* Renderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C9D001E23CFC39F00864E03 /* Renderer.swift */; };
+		8CE8C47423DA3B2B000AEC41 /* Cube.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CE8C47323DA3B2B000AEC41 /* Cube.swift */; };
+		8CE8C47923DA3FB6000AEC41 /* Renderable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CE8C47823DA3FB6000AEC41 /* Renderable.swift */; };
+		8CF2F6F723DA25990055B834 /* BlockGrid.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CF2F6F623DA25990055B834 /* BlockGrid.swift */; };
+		8CF2F6F923DA33410055B834 /* Geometry.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CF2F6F823DA33410055B834 /* Geometry.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -26,7 +30,7 @@
 		8C02231023D0DE2800CB30AE /* MathUtilities.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MathUtilities.swift; sourceTree = "<group>"; };
 		8C03EEF223D512900015C975 /* Types.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Types.swift; sourceTree = "<group>"; };
 		8C52AF9023D395BE0045D07E /* Scene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Scene.swift; sourceTree = "<group>"; };
-		8C52AF9423D395EA0045D07E /* Cube.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Cube.swift; sourceTree = "<group>"; };
+		8C52AF9423D395EA0045D07E /* BufferedCube.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BufferedCube.swift; sourceTree = "<group>"; };
 		8C52AF9623D396CD0045D07E /* GameScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameScene.swift; sourceTree = "<group>"; };
 		8C9D000023C40FE300864E03 /* MetalGame.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MetalGame.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		8C9D000323C40FE300864E03 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -36,6 +40,10 @@
 		8C9D001223C40FE900864E03 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		8C9D001423C40FE900864E03 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		8C9D001E23CFC39F00864E03 /* Renderer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Renderer.swift; sourceTree = "<group>"; };
+		8CE8C47323DA3B2B000AEC41 /* Cube.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Cube.swift; sourceTree = "<group>"; };
+		8CE8C47823DA3FB6000AEC41 /* Renderable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Renderable.swift; sourceTree = "<group>"; };
+		8CF2F6F623DA25990055B834 /* BlockGrid.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlockGrid.swift; sourceTree = "<group>"; };
+		8CF2F6F823DA33410055B834 /* Geometry.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Geometry.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -54,6 +62,10 @@
 			children = (
 				8C9D000323C40FE300864E03 /* AppDelegate.swift */,
 				8C9D000823C40FE400864E03 /* ViewController.swift */,
+				8C9D000C23C40FE400864E03 /* Main.storyboard */,
+				8C9D000F23C40FE900864E03 /* Assets.xcassets */,
+				8C9D001123C40FE900864E03 /* LaunchScreen.storyboard */,
+				8C9D001423C40FE900864E03 /* Info.plist */,
 			);
 			path = System;
 			sourceTree = "<group>";
@@ -70,17 +82,10 @@
 			isa = PBXGroup;
 			children = (
 				8C52AF9823D396E90045D07E /* System */,
-				8C9D001E23CFC39F00864E03 /* Renderer.swift */,
-				8C52AF9423D395EA0045D07E /* Cube.swift */,
-				8C52AF9023D395BE0045D07E /* Scene.swift */,
-				8C52AF9623D396CD0045D07E /* GameScene.swift */,
-				8C02230E23D00F5700CB30AE /* Shaders.metal */,
-				8C03EEF223D512900015C975 /* Types.swift */,
-				8C02231023D0DE2800CB30AE /* MathUtilities.swift */,
-				8C9D000C23C40FE400864E03 /* Main.storyboard */,
-				8C9D000F23C40FE900864E03 /* Assets.xcassets */,
-				8C9D001123C40FE900864E03 /* LaunchScreen.storyboard */,
-				8C9D001423C40FE900864E03 /* Info.plist */,
+				8CE8C47523DA3F3F000AEC41 /* Graphics */,
+				8CE8C47723DA3F8B000AEC41 /* Renderable */,
+				8CF2F6FA23DA345D0055B834 /* Geometry */,
+				8CE8C47623DA3F70000AEC41 /* Scenes */,
 			);
 			path = MetalGame;
 			sourceTree = "<group>";
@@ -91,6 +96,45 @@
 				8C9D000223C40FE300864E03 /* MetalGame */,
 				8C9D000123C40FE300864E03 /* Products */,
 			);
+			sourceTree = "<group>";
+		};
+		8CE8C47523DA3F3F000AEC41 /* Graphics */ = {
+			isa = PBXGroup;
+			children = (
+				8C9D001E23CFC39F00864E03 /* Renderer.swift */,
+				8C02230E23D00F5700CB30AE /* Shaders.metal */,
+				8C02231023D0DE2800CB30AE /* MathUtilities.swift */,
+				8C03EEF223D512900015C975 /* Types.swift */,
+			);
+			path = Graphics;
+			sourceTree = "<group>";
+		};
+		8CE8C47623DA3F70000AEC41 /* Scenes */ = {
+			isa = PBXGroup;
+			children = (
+				8C52AF9023D395BE0045D07E /* Scene.swift */,
+				8C52AF9623D396CD0045D07E /* GameScene.swift */,
+			);
+			path = Scenes;
+			sourceTree = "<group>";
+		};
+		8CE8C47723DA3F8B000AEC41 /* Renderable */ = {
+			isa = PBXGroup;
+			children = (
+				8CF2F6F623DA25990055B834 /* BlockGrid.swift */,
+				8CE8C47823DA3FB6000AEC41 /* Renderable.swift */,
+			);
+			path = Renderable;
+			sourceTree = "<group>";
+		};
+		8CF2F6FA23DA345D0055B834 /* Geometry */ = {
+			isa = PBXGroup;
+			children = (
+				8C52AF9423D395EA0045D07E /* BufferedCube.swift */,
+				8CE8C47323DA3B2B000AEC41 /* Cube.swift */,
+				8CF2F6F823DA33410055B834 /* Geometry.swift */,
+			);
+			path = Geometry;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -167,11 +211,15 @@
 				8C02230F23D00F5700CB30AE /* Shaders.metal in Sources */,
 				8C9D000923C40FE400864E03 /* ViewController.swift in Sources */,
 				8C52AF9123D395BE0045D07E /* Scene.swift in Sources */,
+				8CF2F6F923DA33410055B834 /* Geometry.swift in Sources */,
 				8C03EEF323D512900015C975 /* Types.swift in Sources */,
 				8C52AF9723D396CD0045D07E /* GameScene.swift in Sources */,
+				8CF2F6F723DA25990055B834 /* BlockGrid.swift in Sources */,
 				8C9D001F23CFC39F00864E03 /* Renderer.swift in Sources */,
-				8C52AF9523D395EA0045D07E /* Cube.swift in Sources */,
+				8CE8C47423DA3B2B000AEC41 /* Cube.swift in Sources */,
+				8C52AF9523D395EA0045D07E /* BufferedCube.swift in Sources */,
 				8C9D000423C40FE300864E03 /* AppDelegate.swift in Sources */,
+				8CE8C47923DA3FB6000AEC41 /* Renderable.swift in Sources */,
 				8C02231123D0DE2800CB30AE /* MathUtilities.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -318,7 +366,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = PVKHG959FC;
-				INFOPLIST_FILE = MetalGame/Info.plist;
+				INFOPLIST_FILE = MetalGame/System/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -336,7 +384,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = PVKHG959FC;
-				INFOPLIST_FILE = MetalGame/Info.plist;
+				INFOPLIST_FILE = MetalGame/System/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",

@@ -20,9 +20,13 @@ class Renderer : NSObject {
     var pipelineState: MTLRenderPipelineState!
     var depthStencilState: MTLDepthStencilState?
     
-    var cube: Cube
-    var cube2: Cube
-    var cube3: Cube
+    var viewProjectionMatrix: matrix_float4x4
+    
+    var blockGrid: BlockGrid
+    
+    var cube: BufferedCube
+    var cube2: BufferedCube
+    var cube3: BufferedCube
     
     var uniforms1: Uniforms!
     var uniforms2: Uniforms!
@@ -43,9 +47,13 @@ class Renderer : NSObject {
             commandQueue = newCommandQueue
         } else { fatalError("Couldn't make command queue!") }
         
-        cube = Cube(device: device, mtkView: mtkView)
-        cube2 = Cube(device: device, mtkView: mtkView)
-        cube3 = Cube(device: device, mtkView: mtkView)
+        blockGrid = BlockGrid(device: device, position: [0,0,0])
+        
+        cube = BufferedCube(device: device, position:[0,0,0])
+        cube2 = BufferedCube(device: device, position:[0,0,0])
+        cube3 = BufferedCube(device: device, position:[0,0,0])
+        
+        viewProjectionMatrix = Renderer.buildViewProjectionMatrix(mtkView: view)
         
         super.init()
         self.buildPipeline()
@@ -91,6 +99,20 @@ class Renderer : NSObject {
         self.depthStencilState = self.device.makeDepthStencilState(descriptor: depthStencilDescriptor)!
     }
     
+    static func buildViewProjectionMatrix(mtkView: MTKView) -> matrix_float4x4 {
+        let cameraTranslation = SIMD3<Float>(0, 0,-5)
+        let viewMatrix = float4x4(translationBy: cameraTranslation)
+        
+        let aspect: Float  = Float(mtkView.drawableSize.width / mtkView.drawableSize.height)
+        let fov: Float = (2*Float.pi)/5
+        let near: Float = 1
+        let far: Float = 100
+        let projectionMatrix = float4x4(perspectiveProjectionFov: fov, aspectRatio: aspect, nearZ: near, farZ: far)
+        
+        let viewProjectionMatrix = projectionMatrix * viewMatrix
+        return viewProjectionMatrix
+    }
+    
     func updateUniforms(in view: MTKView) {
         time += 1.0/Float(view.preferredFramesPerSecond)
         
@@ -105,18 +127,9 @@ class Renderer : NSObject {
         let modelMatrix2 = matrix_float4x4(translationBy: [1, 1, 0]) * scale * rotationX * rotationY
         let modelMatrix3 = matrix_float4x4(translationBy: [0, 0, 0]) * scale * pulsatingScale * pulsatingRotationX * pulsatingRotationY
         
-        let cameraTranslation = SIMD3<Float>(0, 0,-5)
-        let viewMatrix = float4x4(translationBy: cameraTranslation)
-        
-        let aspect: Float  = Float(view.drawableSize.width / view.drawableSize.height)
-        let fov: Float = (2*Float.pi)/5
-        let near: Float = 1
-        let far: Float = 100
-        let projectionMatrix = float4x4(perspectiveProjectionFov: fov, aspectRatio: aspect, nearZ: near, farZ: far)
-        
-        let mvpMatrix1 = projectionMatrix * viewMatrix * modelMatrix1
-        let mvpMatrix2 = projectionMatrix * viewMatrix * modelMatrix2
-        let mvpMatrix3 = projectionMatrix * viewMatrix * modelMatrix3
+        let mvpMatrix1 = viewProjectionMatrix * modelMatrix1
+        let mvpMatrix2 = viewProjectionMatrix * modelMatrix2
+        let mvpMatrix3 = viewProjectionMatrix * modelMatrix3
         self.uniforms1 = Uniforms(modelViewProjectionMatrix: mvpMatrix1, xOffset: 0)
         self.uniforms2 = Uniforms(modelViewProjectionMatrix: mvpMatrix2, xOffset: 0)
         self.uniforms3 = Uniforms(modelViewProjectionMatrix: mvpMatrix3, xOffset: 0)
@@ -144,14 +157,14 @@ extension Renderer : MTKViewDelegate {
         commandEncoder.setVertexBuffer(cube.vertexBuffer, offset: 0, index: 0)
         commandEncoder.setVertexBytes(&uniforms1, length: MemoryLayout<Uniforms>.stride, index: 1)
         commandEncoder.drawIndexedPrimitives(type: .triangle, indexCount: cube.indices.count, indexType: .uint16, indexBuffer: cube.indexBuffer, indexBufferOffset: 0)
-        
-        commandEncoder.setVertexBuffer(cube2.vertexBuffer, offset: 0, index: 0)
+
         commandEncoder.setVertexBytes(&uniforms2, length: MemoryLayout<Uniforms>.stride, index: 1)
-        commandEncoder.drawIndexedPrimitives(type: .triangle, indexCount: cube2.indices.count, indexType: .uint16, indexBuffer: cube2.indexBuffer, indexBufferOffset: 0)
+        commandEncoder.drawIndexedPrimitives(type: .triangle, indexCount: cube.indices.count, indexType: .uint16, indexBuffer: cube.indexBuffer, indexBufferOffset: 0)
         
-        commandEncoder.setVertexBuffer(cube3.vertexBuffer, offset: 0, index: 0)
         commandEncoder.setVertexBytes(&uniforms3, length: MemoryLayout<Uniforms>.stride, index: 1)
-        commandEncoder.drawIndexedPrimitives(type: .triangle, indexCount: cube3.indices.count, indexType: .uint16, indexBuffer: cube3.indexBuffer, indexBufferOffset: 0)
+        commandEncoder.drawIndexedPrimitives(type: .triangle, indexCount: cube.indices.count, indexType: .uint16, indexBuffer: cube.indexBuffer, indexBufferOffset: 0)
+        
+        blockGrid.render(commandEncoder: commandEncoder, viewProjectionMatrix: viewProjectionMatrix)
         
         commandEncoder.endEncoding()
     

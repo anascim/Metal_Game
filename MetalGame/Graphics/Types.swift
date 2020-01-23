@@ -8,6 +8,9 @@
 
 import simd
 
+typealias float3 = SIMD3<Float>
+typealias float4 = SIMD4<Float>
+
 struct Vertex {
     var position: vector_float3
     var color: vector_float4
