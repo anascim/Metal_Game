@@ -8,23 +8,26 @@
 
 import MetalKit
 
-// This class is used to render a block grid on the screen.
-// The position of the blocks is dictated by the modelMatrix sent by uniform data.
-// The BlockGrid position represents its top-left corner, rendering the blocks from there.
+/// This class is used to render a block grid on the screen.
+/// The position of the blocks is dictated by the modelMatrix sent by uniform data.
+/// The BlockGrid position represents its top-left corner, rendering the blocks from there.
 
 class BlockGrid : Renderable {
     
     let device: MTLDevice
-    var position: float3
     var vertexBuffer: MTLBuffer!
     var indexBuffer: MTLBuffer!
     var uniforms: Uniforms!
-    var gridLayout: (UInt16, UInt16)
     var geometry: Cube
+    
+    var position: float3
+    var gridLayout: (UInt16, UInt16)
+    var blockPadding: Float
     
     init(device: MTLDevice, position: float3) {
         self.device = device
         self.position = position
+        self.blockPadding = 0.5
         self.gridLayout = (8, 16)
         self.geometry = Cube()
         self.buildBuffers()
@@ -46,9 +49,9 @@ class BlockGrid : Renderable {
         } else { fatalError("BlockGrid:buildBuffers Couldn't make buffer!") }
     }
     
-    public func render(commandEncoder: MTLRenderCommandEncoder, viewProjectionMatrix: matrix_float4x4) {
+    public func render(commandEncoder: MTLRenderCommandEncoder, viewProjectionMatrix: float4x4, time: Float) {
         
-        // select block
+        commandEncoder.setVertexBuffer(vertexBuffer, offset: 0, index: 0)
         for row in 0..<gridLayout.1 {
             for col in 0..<gridLayout.0 {
                 
@@ -57,14 +60,14 @@ class BlockGrid : Renderable {
                 // ---------------
                 
                 // position on the grid
-                let translation = matrix_float4x4(translationBy: [Float(col) * 2.5 - 9, Float(row) * -2.5  + 30, 0])
+                let translation = float4x4(translationBy: [Float(col) * blockPadding + position[0], Float(row) * -blockPadding + position[1], 0])
                 
                 // scale to become more rectangular
-                let scale1 = matrix_float4x4(scaleBy: 0.1)
-                let scale2 = matrix_float4x4(scaleBy: [1.618, 1, 1]) // golden ration
+                let scale1 = float4x4(scaleBy: 0.1)
+                let scale2 = float4x4(scaleBy: [1.618, 1, 1])
                 let scale = scale1 * scale2
                 
-                let modelMatrix = scale * translation // scale and then translate
+                let modelMatrix = translation * scale // translate and then scale
                 let mvpMatrix = viewProjectionMatrix * modelMatrix
                 uniforms = Uniforms(modelViewProjectionMatrix: mvpMatrix, xOffset: 0)
                 
@@ -72,10 +75,8 @@ class BlockGrid : Renderable {
                 // Render pass
                 // -----------
                 
-                commandEncoder.setVertexBuffer(vertexBuffer, offset: 0, index: 0)
                 commandEncoder.setVertexBytes(&uniforms, length: MemoryLayout<Uniforms>.stride, index: 1)
                 commandEncoder.drawIndexedPrimitives(type: .triangle, indexCount: geometry.indices.count, indexType: .uint16, indexBuffer: indexBuffer, indexBufferOffset: 0)
-                
             }
         }
         

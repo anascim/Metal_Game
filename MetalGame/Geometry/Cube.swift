@@ -18,16 +18,42 @@ class Cube : Geometry {
         self.indices = Cube.buildIndices()
     }
     
+    static func buildVertices(color: float4) -> [Vertex] {
+        return [
+            Vertex(position: [-1.0, -1.0, 1.0], color: color),
+            Vertex(position: [-1.0,  1.0, 1.0], color: color),
+            Vertex(position: [-1.0, -1.0,-1.0], color: color),
+            Vertex(position: [-1.0,  1.0,-1.0], color: color),
+            Vertex(position: [ 1.0, -1.0, 1.0], color: color),
+            Vertex(position: [ 1.0,  1.0, 1.0], color: color),
+            Vertex(position: [ 1.0, -1.0,-1.0], color: color),
+            Vertex(position: [ 1.0,  1.0,-1.0], color: color)
+        ]
+    }
+    
+    static func buildVertices(color1: float4, color2: float4) -> [Vertex] {
+        return [
+            Vertex(position: [-1.0, -1.0, 1.0], color: color1),
+            Vertex(position: [-1.0,  1.0, 1.0], color: color1),
+            Vertex(position: [-1.0, -1.0,-1.0], color: color1),
+            Vertex(position: [-1.0,  1.0,-1.0], color: color1),
+            Vertex(position: [ 1.0, -1.0, 1.0], color: color1),
+            Vertex(position: [ 1.0,  1.0, 1.0], color: color1),
+            Vertex(position: [ 1.0, -1.0,-1.0], color: color1),
+            Vertex(position: [ 1.0,  1.0,-1.0], color: color1)
+        ]
+    }
+    
     static func buildVertices() -> [Vertex] {
         return [
-            Vertex(position: [-1.0, -1.0, 1.0], color: [0.0, 0.0, 1.0, 1.0]),
-            Vertex(position: [-1.0,  1.0, 1.0], color: [0.0, 1.0, 1.0, 1.0]),
-            Vertex(position: [-1.0, -1.0,-1.0], color: [1.0, 0.0, 1.0, 1.0]),
-            Vertex(position: [-1.0,  1.0,-1.0], color: [1.0, 1.0, 1.0, 1.0]),
-            Vertex(position: [ 1.0, -1.0, 1.0], color: [0.0, 0.0, 0.0, 1.0]),
-            Vertex(position: [ 1.0,  1.0, 1.0], color: [0.0, 1.0, 0.0, 1.0]),
-            Vertex(position: [ 1.0, -1.0,-1.0], color: [1.0, 0.0, 0.0, 1.0]),
-            Vertex(position: [ 1.0,  1.0,-1.0], color: [1.0, 1.0, 0.0, 1.0])
+            Vertex(position: [-1.0, -1.0, 1.0], color: [0.0, 0.0, 1.0, 1.0]), // 0: blue
+            Vertex(position: [-1.0,  1.0, 1.0], color: [0.0, 1.0, 1.0, 1.0]), // 1: cian
+            Vertex(position: [-1.0, -1.0,-1.0], color: [1.0, 0.0, 1.0, 1.0]), // 2: pink
+            Vertex(position: [-1.0,  1.0,-1.0], color: [1.0, 1.0, 1.0, 1.0]), // 3: white
+            Vertex(position: [ 1.0, -1.0, 1.0], color: [0.0, 0.0, 0.0, 1.0]), // 4: black
+            Vertex(position: [ 1.0,  1.0, 1.0], color: [0.0, 1.0, 0.0, 1.0]), // 5: green
+            Vertex(position: [ 1.0, -1.0,-1.0], color: [1.0, 0.0, 0.0, 1.0]), // 6: red
+            Vertex(position: [ 1.0,  1.0,-1.0], color: [1.0, 1.0, 0.0, 1.0])  // 7: yellow
         ]
     }
     

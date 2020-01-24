@@ -11,7 +11,7 @@
 
 import simd
 
-extension matrix_float4x4 {
+extension float4x4 {
     init(scaleBy s: Float) {
         self.init(float4(s, 0, 0, 0),
                   float4(0, s, 0, 0),

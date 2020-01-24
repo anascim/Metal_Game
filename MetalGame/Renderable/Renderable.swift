@@ -13,5 +13,5 @@ import MetalKit
 
 public protocol Renderable {
     
-    func render(commandEncoder: MTLRenderCommandEncoder, viewProjectionMatrix: matrix_float4x4)
+    func render(commandEncoder: MTLRenderCommandEncoder, viewProjectionMatrix: float4x4, time: Float)
 }

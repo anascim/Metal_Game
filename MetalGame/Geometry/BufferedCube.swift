@@ -43,25 +43,25 @@ class BufferedCube : Geometry {
     
     static func buildVertices() -> [Vertex] {
         return [
-            Vertex(position: [-1.0, -1.0, 1.0], color: [0.0, 0.0, 1.0, 1.0]),
-            Vertex(position: [-1.0,  1.0, 1.0], color: [0.0, 1.0, 1.0, 1.0]),
-            Vertex(position: [-1.0, -1.0,-1.0], color: [1.0, 0.0, 1.0, 1.0]),
-            Vertex(position: [-1.0,  1.0,-1.0], color: [1.0, 1.0, 1.0, 1.0]),
-            Vertex(position: [ 1.0, -1.0, 1.0], color: [0.0, 0.0, 0.0, 1.0]),
-            Vertex(position: [ 1.0,  1.0, 1.0], color: [0.0, 1.0, 0.0, 1.0]),
-            Vertex(position: [ 1.0, -1.0,-1.0], color: [1.0, 0.0, 0.0, 1.0]),
-            Vertex(position: [ 1.0,  1.0,-1.0], color: [1.0, 1.0, 0.0, 1.0])
+            Vertex(position: [-1, 1, 1], color: [0,1,1,1]),
+            Vertex(position: [-1,-1, 1], color: [0,0,1,1]),
+            Vertex(position: [ 1,-1, 1], color: [1,0,1,1]),
+            Vertex(position: [ 1, 1, 1], color: [1,1,1,1]),
+            Vertex(position: [-1, 1,-1], color: [0,1,0,1]),
+            Vertex(position: [-1,-1,-1], color: [0,0,0,1]),
+            Vertex(position: [ 1,-1,-1], color: [1,0,0,1]),
+            Vertex(position: [ 1, 1,-1], color: [1,1,0,1])
         ]
     }
     
     static func buildIndices() -> [UInt16] {
         return [
-              0, 1, 2, 1, 3, 2,
-              3, 6, 2, 3, 7, 6,
-              7, 4, 6, 7, 5, 4,
-              5, 0, 4, 5, 1, 0,
-              1, 5, 7, 1, 7, 3,
-              2, 6, 4, 2, 4, 0
+              3,2,6,6,7,3,
+              4,5,1,1,0,4,
+              4,0,3,3,7,4,
+              1,5,6,6,2,1,
+              0,1,2,2,3,0,
+              7,6,5,5,4,7
           ]
     }
 }
