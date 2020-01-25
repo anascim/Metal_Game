@@ -17,7 +17,7 @@ struct Vertex {
     var color: float4
 }
 
-struct Uniforms {
+public struct Uniforms {
     var modelViewProjectionMatrix: float4x4
     var xOffset: Float
 }

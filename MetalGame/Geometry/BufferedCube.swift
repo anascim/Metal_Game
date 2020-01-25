@@ -8,8 +8,8 @@
 
 import MetalKit
 
-// This is a convenience class for debugging,
-// the Cube class should be used instead
+/// This is a convenience class for debugging,
+/// the Cube class should be used instead
 
 class BufferedCube : Geometry {
     

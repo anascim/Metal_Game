@@ -8,6 +8,9 @@
 
 import MetalKit
 
+/// This is a static class for building view-projectino matrices.
+/// It's not recommended to instantiate this.
+
 class ViewProjection {
     
     static func buildViewProjectionMatrix(mtkView: MTKView) -> float4x4 {

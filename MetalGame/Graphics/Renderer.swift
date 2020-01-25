@@ -11,20 +11,20 @@
 
 import MetalKit
 
+/// The Renderer is the system used to render a single scene on the screen.
+/// It implements the MTKViewDelegate protocol, which is responsible for making the draw calls for the view.
+
 class Renderer : NSObject {
    
     let device: MTLDevice
     let view: MTKView
     let commandQueue: MTLCommandQueue
-    
     var standardPipeline: StandardPipeline
-    
     var viewProjectionMatrix: float4x4
     
-    var blockGrid: BlockGrid
-    var blockFrame: BlockFrame
-    
     var time: Float = 0
+    
+    var scene: Scene?
     
     init?(mtkView: MTKView){
         self.view = mtkView
@@ -42,8 +42,7 @@ class Renderer : NSObject {
         standardPipeline = StandardPipeline(device: device, view: view)
         viewProjectionMatrix = ViewProjection.buildViewProjectionMatrix(mtkView: view)
         
-        blockGrid = BlockGrid(device: device, position: [-1.2,3,0])
-        blockFrame = BlockFrame(device: device, size: [2.5,6])
+        scene = BreakoutScene(device: device, view: view)
         
         super.init()
     }
@@ -67,8 +66,7 @@ extension Renderer : MTKViewDelegate {
         commandEncoder.setDepthStencilState(standardPipeline.depthStencilState)
         commandEncoder.setRenderPipelineState(standardPipeline.pipelineState)
         
-        blockGrid.render(commandEncoder: commandEncoder, viewProjectionMatrix: viewProjectionMatrix, time: time)
-        blockFrame.render(commandEncoder: commandEncoder, viewProjectionMatrix: viewProjectionMatrix, time: time)
+        scene?.render(commandEncoder: commandEncoder, viewProjectionMatrix: viewProjectionMatrix, time: time)
         
         commandEncoder.endEncoding()
     

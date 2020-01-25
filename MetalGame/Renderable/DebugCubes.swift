@@ -11,7 +11,7 @@ import MetalKit
 // This class is only for debbuging functionality with the cubes
 // It shouldn't be used in the final product
 
-class DebugCubes : Renderable {
+class DebugCubes {
     
     var cube: BufferedCube
     var cube2: BufferedCube

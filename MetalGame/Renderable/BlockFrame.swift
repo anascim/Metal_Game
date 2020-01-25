@@ -12,7 +12,7 @@ import MetalKit
 
 class BlockFrame : Renderable {
     
-    let device: MTLDevice
+    var device: MTLDevice
     var vertexBuffer: MTLBuffer!
     var indexBuffer: MTLBuffer!
     var uniforms: Uniforms!
@@ -57,7 +57,7 @@ class BlockFrame : Renderable {
         let modelMtxs = [modelMatrix1, modelMatrix2, modelMatrix3, modelMatrix4]
         
         for m in modelMtxs {
-            let mvpMatrix = viewProjectionMatrix * m// scale and then translate
+            let mvpMatrix = viewProjectionMatrix * m // scale and then translate
             uniforms = Uniforms(modelViewProjectionMatrix: mvpMatrix, xOffset: 0)
             
             commandEncoder.setVertexBuffer(vertexBuffer, offset: 0, index: 0)

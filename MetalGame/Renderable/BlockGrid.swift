@@ -14,44 +14,29 @@ import MetalKit
 
 class BlockGrid : Renderable {
     
-    let device: MTLDevice
-    var vertexBuffer: MTLBuffer!
-    var indexBuffer: MTLBuffer!
+    var device: MTLDevice
+    var delegate: VertexBufferDelegate?
     var uniforms: Uniforms!
-    var geometry: Cube
     
     var position: float3
     var gridLayout: (UInt16, UInt16)
     var blockPadding: Float
+    var blockWidth: Float
+    var blockHeight: Float
     
     init(device: MTLDevice, position: float3) {
         self.device = device
         self.position = position
         self.blockPadding = 0.5
-        self.gridLayout = (8, 16)
-        self.geometry = Cube()
-        self.buildBuffers()
-    }
-    
-    private func buildBuffers() {
-        let vertices = geometry.vertices
-        let indices = geometry.indices
-        
-        if let buffer = device.makeBuffer(bytes: vertices,
-                          length: MemoryLayout<Vertex>.stride * vertices.count,
-                          options: .cpuCacheModeWriteCombined) {
-            vertexBuffer = buffer
-        } else { fatalError("BlockGrid:buildBuffers Couldn't make buffer!") }
-        if let buffer = device.makeBuffer(bytes: indices,
-                                          length: MemoryLayout<UInt16>.stride * indices.count,
-                                          options: .cpuCacheModeWriteCombined) {
-            indexBuffer = buffer
-        } else { fatalError("BlockGrid:buildBuffers Couldn't make buffer!") }
+        self.blockWidth = 0.4
+        self.blockHeight = 0.2
+        self.gridLayout = (7, 16)
     }
     
     public func render(commandEncoder: MTLRenderCommandEncoder, viewProjectionMatrix: float4x4, time: Float) {
+        guard let delegate = delegate else { return }
         
-        commandEncoder.setVertexBuffer(vertexBuffer, offset: 0, index: 0)
+        commandEncoder.setVertexBuffer(delegate.vertexBuffer, offset: 0, index: 0)
         for row in 0..<gridLayout.1 {
             for col in 0..<gridLayout.0 {
                 
@@ -59,15 +44,13 @@ class BlockGrid : Renderable {
                 // Update uniforms
                 // ---------------
                 
-                // position on the grid
-                let translation = float4x4(translationBy: [Float(col) * blockPadding + position[0], Float(row) * -blockPadding + position[1], 0])
-                
                 // scale to become more rectangular
-                let scale1 = float4x4(scaleBy: 0.1)
-                let scale2 = float4x4(scaleBy: [1.618, 1, 1])
-                let scale = scale1 * scale2
+                let scale = float4x4(scaleBy: [blockWidth/2, blockHeight/2, blockHeight/2])
                 
-                let modelMatrix = translation * scale // translate and then scale
+                // position on the grid
+                let translation = float4x4(translationBy: [Float(col) * blockWidth + position[0], Float(row) * -blockHeight + position[1], 0])
+                
+                let modelMatrix = translation * scale // scale and then translate
                 let mvpMatrix = viewProjectionMatrix * modelMatrix
                 uniforms = Uniforms(modelViewProjectionMatrix: mvpMatrix, xOffset: 0)
                 
@@ -76,10 +59,9 @@ class BlockGrid : Renderable {
                 // -----------
                 
                 commandEncoder.setVertexBytes(&uniforms, length: MemoryLayout<Uniforms>.stride, index: 1)
-                commandEncoder.drawIndexedPrimitives(type: .triangle, indexCount: geometry.indices.count, indexType: .uint16, indexBuffer: indexBuffer, indexBufferOffset: 0)
+                commandEncoder.drawIndexedPrimitives(type: .triangle, indexCount: delegate.indices.count, indexType: .uint16, indexBuffer: delegate.indexBuffer, indexBufferOffset: 0)
             }
         }
-        
     }
 }
 

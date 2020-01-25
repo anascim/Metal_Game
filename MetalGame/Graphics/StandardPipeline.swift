@@ -8,6 +8,10 @@
 
 import MetalKit
 
+/// Standard rendering pipeline with simple vertex and fragment shaders.
+/// It serves as a basic passthrough pipeline for rendering simple shapes.
+/// For more complicated shading functionality, create another pipeline class with the alternative shaders.
+
 class StandardPipeline {
     
     let device: MTLDevice

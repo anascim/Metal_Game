@@ -6,10 +6,10 @@
 //  Copyright © 2020 Alex Nascimento. All rights reserved.
 //
 
-// This protocol is intended for geometry description only
-// Classes such as Cube, Piramid etc must implement this protocol
-// No Metal logic or buffer creation
-// Only vertices and indices and methods linked with those
+/// This protocol is intended for geometry description only
+/// Classes such as Cube, Piramid etc must implement this protocol
+/// No Metal logic or buffer creation
+/// Only vertices and indices and methods linked with those
 
 protocol Geometry {
     
