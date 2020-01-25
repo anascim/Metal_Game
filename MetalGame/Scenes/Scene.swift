@@ -18,8 +18,15 @@ class Scene : Node, Renderable {
     }
     
     func addChild(_ node: Node) {
-        node.parent = self
         nodes.append(node)
+    }
+    
+    func removeChild(_ node: Node) {
+        if let index = nodes.firstIndex(of: node) {
+            nodes.remove(at: index)
+        } else {
+            print("Scene:removeChild() no index found for the node!")
+        }
     }
     
     func render(commandEncoder: MTLRenderCommandEncoder, viewProjectionMatrix: float4x4, time: Float) {
