@@ -13,6 +13,7 @@ import MetalKit
 class ViewController: UIViewController {
 
     var renderer: Renderer!
+    var mtkView: MTKView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -21,6 +22,7 @@ class ViewController: UIViewController {
             print("View is not an MTKView!")
             return
         }
+        self.mtkView = mtkView
         
         guard let defaultDevice = MTLCreateSystemDefaultDevice() else {
             print("Metal not supported!")
@@ -34,5 +36,9 @@ class ViewController: UIViewController {
         
         renderer = Renderer(mtkView: mtkView)
         mtkView.delegate = renderer
+    }
+    
+    override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
+        renderer.scene?.touchMove(location: touches.first!.location(in: mtkView))
     }
 }

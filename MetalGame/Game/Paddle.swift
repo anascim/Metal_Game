@@ -12,10 +12,10 @@ class Paddle : Renderable {
     
     var uniforms: Uniforms!
     var xPosition: Float = 0
-    var delegate: VertexBufferDelegate?
+    var cubeVBO: VertexBufferDelegate?
     
     func render(commandEncoder: MTLRenderCommandEncoder, viewProjectionMatrix: float4x4, time: Float) {
-        guard let delegate = delegate else { return }
+        guard let delegate = cubeVBO else { return }
         
         let scale = float4x4(scaleBy: [0.4, 0.1, 0.1])
         
@@ -23,7 +23,8 @@ class Paddle : Renderable {
         
         let modelMatrix = translation * scale // scale and then translate
         let mvpMatrix = viewProjectionMatrix * modelMatrix
-        uniforms = Uniforms(modelViewProjectionMatrix: mvpMatrix, xOffset: 0)
+        
+        uniforms = Uniforms(modelViewProjectionMatrix: mvpMatrix, xOffset: xPosition)
         
         // -----------
         // Render pass

@@ -8,6 +8,9 @@
 
 import MetalKit
 
+/// This delegate should be used in conjunction with the renderable objects.
+/// With this delegate, a lot of renderables can use the same buffer for drawing images, saving memory and initialization time.
+
 protocol VertexBufferDelegate {
     
     var device: MTLDevice { get set }

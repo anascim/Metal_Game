@@ -6,8 +6,6 @@
 //  Copyright © 2020 Alex Nascimento. All rights reserved.
 //
 
-import Foundation
-
 struct Cube : Geometry {
     
     var vertices: [Vertex]

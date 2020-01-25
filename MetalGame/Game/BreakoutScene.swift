@@ -14,15 +14,24 @@ class BreakoutScene : Scene {
     let blockFrame: BlockFrame
     let paddle: Paddle
     let cubeVBO: CubeVBO
+    let planeVBO: PlaneVBO
+    
+    let translucentPlane: TranslucentPlane
     
     override init(device: MTLDevice, view: MTKView) {
         cubeVBO = CubeVBO(device: device)
+        planeVBO = PlaneVBO(device: device, color: [0,0,0,0])
         blockGrid = BlockGrid(device: device, position: [-1.2,3,0])
-        blockGrid.delegate = cubeVBO
         blockFrame = BlockFrame(device: device, size: [Float(view.drawableSize.width*0.004),
                                                        Float(view.drawableSize.height*0.004)])
         paddle = Paddle()
-        paddle.delegate = cubeVBO
+        translucentPlane = TranslucentPlane(device: device, size: [Float(view.drawableSize.width*0.004),
+                                                                   Float(view.drawableSize.height*0.004)])
+        
+        blockGrid.cubeVBO = cubeVBO
+        blockFrame.cubeVBO = cubeVBO
+        paddle.cubeVBO = cubeVBO
+        
         super.init(device: device, view: view)
         
         let gridNode = Node()
@@ -36,5 +45,13 @@ class BreakoutScene : Scene {
         addChild(gridNode)
         addChild(frameNode)
         addChild(paddleNode)
+    }
+    
+    override func touchMove(location: CGPoint) {
+        // TODO: this conversion is not perfect. Make better screen to world conversion.
+        let pctx = (location.x * 2 / view.drawableSize.width)
+        let relativePosX = pctx * 6.624 - 3.312
+        print("relativePosX: \(relativePosX), location: \(location), drawableSizeW: \(view.drawableSize.width)")
+        paddle.xPosition = Float(relativePosX)
     }
 }

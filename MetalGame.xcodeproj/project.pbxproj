@@ -26,6 +26,9 @@
 		8CC64E1623DB8F0600B861BC /* VertexBufferDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CC64E1523DB8F0600B861BC /* VertexBufferDelegate.swift */; };
 		8CC64E1823DB8FF500B861BC /* CubeVBO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CC64E1723DB8FF500B861BC /* CubeVBO.swift */; };
 		8CC64E1A23DB9B4600B861BC /* Paddle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CC64E1923DB9B4600B861BC /* Paddle.swift */; };
+		8CC64E1C23DBCB0200B861BC /* TranslucentPlane.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CC64E1B23DBCB0200B861BC /* TranslucentPlane.swift */; };
+		8CC64E1E23DBCD3B00B861BC /* Plane.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CC64E1D23DBCD3B00B861BC /* Plane.swift */; };
+		8CC64E2123DBCF0300B861BC /* PlaneVBO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CC64E2023DBCF0300B861BC /* PlaneVBO.swift */; };
 		8CE8C47423DA3B2B000AEC41 /* Cube.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CE8C47323DA3B2B000AEC41 /* Cube.swift */; };
 		8CE8C47923DA3FB6000AEC41 /* Renderable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CE8C47823DA3FB6000AEC41 /* Renderable.swift */; };
 		8CF2F6F723DA25990055B834 /* BlockGrid.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CF2F6F623DA25990055B834 /* BlockGrid.swift */; };
@@ -54,6 +57,9 @@
 		8CC64E1523DB8F0600B861BC /* VertexBufferDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VertexBufferDelegate.swift; sourceTree = "<group>"; };
 		8CC64E1723DB8FF500B861BC /* CubeVBO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CubeVBO.swift; sourceTree = "<group>"; };
 		8CC64E1923DB9B4600B861BC /* Paddle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Paddle.swift; sourceTree = "<group>"; };
+		8CC64E1B23DBCB0200B861BC /* TranslucentPlane.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TranslucentPlane.swift; sourceTree = "<group>"; };
+		8CC64E1D23DBCD3B00B861BC /* Plane.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Plane.swift; sourceTree = "<group>"; };
+		8CC64E2023DBCF0300B861BC /* PlaneVBO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaneVBO.swift; sourceTree = "<group>"; };
 		8CE8C47323DA3B2B000AEC41 /* Cube.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Cube.swift; sourceTree = "<group>"; };
 		8CE8C47823DA3FB6000AEC41 /* Renderable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Renderable.swift; sourceTree = "<group>"; };
 		8CF2F6F623DA25990055B834 /* BlockGrid.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlockGrid.swift; sourceTree = "<group>"; };
@@ -99,7 +105,8 @@
 				8CE8C47523DA3F3F000AEC41 /* Graphics */,
 				8CE8C47723DA3F8B000AEC41 /* Renderable */,
 				8CF2F6FA23DA345D0055B834 /* Geometry */,
-				8CE8C47623DA3F70000AEC41 /* Scenes */,
+				8CE8C47623DA3F70000AEC41 /* Nodes */,
+				8CC64E1F23DBCE6500B861BC /* Game */,
 			);
 			path = MetalGame;
 			sourceTree = "<group>";
@@ -110,6 +117,19 @@
 				8C9D000223C40FE300864E03 /* MetalGame */,
 				8C9D000123C40FE300864E03 /* Products */,
 			);
+			sourceTree = "<group>";
+		};
+		8CC64E1F23DBCE6500B861BC /* Game */ = {
+			isa = PBXGroup;
+			children = (
+				8CC64E1923DB9B4600B861BC /* Paddle.swift */,
+				8CF2F6F623DA25990055B834 /* BlockGrid.swift */,
+				8CB9885A23DAA5AE00023B8D /* BlockFrame.swift */,
+				8C52AF9623D396CD0045D07E /* BreakoutScene.swift */,
+				8CC64E1B23DBCB0200B861BC /* TranslucentPlane.swift */,
+				8C3E744023DB891D00A0F3F2 /* BlockNode.swift */,
+			);
+			path = Game;
 			sourceTree = "<group>";
 		};
 		8CE8C47523DA3F3F000AEC41 /* Graphics */ = {
@@ -125,26 +145,22 @@
 			path = Graphics;
 			sourceTree = "<group>";
 		};
-		8CE8C47623DA3F70000AEC41 /* Scenes */ = {
+		8CE8C47623DA3F70000AEC41 /* Nodes */ = {
 			isa = PBXGroup;
 			children = (
 				8C52AF9023D395BE0045D07E /* Scene.swift */,
-				8C52AF9623D396CD0045D07E /* BreakoutScene.swift */,
 				8CB9885C23DB7E8900023B8D /* Node.swift */,
 			);
-			path = Scenes;
+			path = Nodes;
 			sourceTree = "<group>";
 		};
 		8CE8C47723DA3F8B000AEC41 /* Renderable */ = {
 			isa = PBXGroup;
 			children = (
-				8CF2F6F623DA25990055B834 /* BlockGrid.swift */,
-				8C3E744023DB891D00A0F3F2 /* BlockNode.swift */,
-				8CC64E1923DB9B4600B861BC /* Paddle.swift */,
-				8CB9885A23DAA5AE00023B8D /* BlockFrame.swift */,
 				8CE8C47823DA3FB6000AEC41 /* Renderable.swift */,
 				8CC64E1523DB8F0600B861BC /* VertexBufferDelegate.swift */,
 				8CC64E1723DB8FF500B861BC /* CubeVBO.swift */,
+				8CC64E2023DBCF0300B861BC /* PlaneVBO.swift */,
 			);
 			path = Renderable;
 			sourceTree = "<group>";
@@ -152,8 +168,9 @@
 		8CF2F6FA23DA345D0055B834 /* Geometry */ = {
 			isa = PBXGroup;
 			children = (
-				8CE8C47323DA3B2B000AEC41 /* Cube.swift */,
 				8CF2F6F823DA33410055B834 /* Geometry.swift */,
+				8CE8C47323DA3B2B000AEC41 /* Cube.swift */,
+				8CC64E1D23DBCD3B00B861BC /* Plane.swift */,
 			);
 			path = Geometry;
 			sourceTree = "<group>";
@@ -239,12 +256,15 @@
 				8C52AF9723D396CD0045D07E /* BreakoutScene.swift in Sources */,
 				8CB9885923DA6EA100023B8D /* ViewProjection.swift in Sources */,
 				8CF2F6F723DA25990055B834 /* BlockGrid.swift in Sources */,
+				8CC64E1E23DBCD3B00B861BC /* Plane.swift in Sources */,
 				8C9D001F23CFC39F00864E03 /* Renderer.swift in Sources */,
 				8CC64E1A23DB9B4600B861BC /* Paddle.swift in Sources */,
 				8CE8C47423DA3B2B000AEC41 /* Cube.swift in Sources */,
+				8CC64E1C23DBCB0200B861BC /* TranslucentPlane.swift in Sources */,
 				8CB9885723DA6B6700023B8D /* StandardPipeline.swift in Sources */,
 				8C9D000423C40FE300864E03 /* AppDelegate.swift in Sources */,
 				8CC64E1623DB8F0600B861BC /* VertexBufferDelegate.swift in Sources */,
+				8CC64E2123DBCF0300B861BC /* PlaneVBO.swift in Sources */,
 				8CE8C47923DA3FB6000AEC41 /* Renderable.swift in Sources */,
 				8CC64E1823DB8FF500B861BC /* CubeVBO.swift in Sources */,
 				8C02231123D0DE2800CB30AE /* MathUtilities.swift in Sources */,

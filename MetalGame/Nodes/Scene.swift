@@ -10,11 +10,14 @@ import MetalKit
 
 class Scene : Node, Renderable {
     
+    var device: MTLDevice
+    var view: MTKView
     var nodes = [Node]()
     
     init(device: MTLDevice, view: MTKView) {
+        self.device = device
+        self.view = view
         super.init()
-        
     }
     
     func addChild(_ node: Node) {
@@ -31,5 +34,17 @@ class Scene : Node, Renderable {
     
     func render(commandEncoder: MTLRenderCommandEncoder, viewProjectionMatrix: float4x4, time: Float) {
         nodes.forEach { $0.renderable?.render(commandEncoder: commandEncoder, viewProjectionMatrix: viewProjectionMatrix, time: time) }
+    }
+    
+    func touchBegan(location: CGPoint) {
+        
+    }
+    
+    func touchMove(location: CGPoint) {
+        
+    }
+    
+    func touchEnded(location: CGPoint) {
+        
     }
 }

@@ -15,26 +15,24 @@ import MetalKit
 class BlockGrid : Renderable {
     
     var device: MTLDevice
-    var delegate: VertexBufferDelegate?
+    var cubeVBO: VertexBufferDelegate?
     var uniforms: Uniforms!
     
     var position: float3
     var gridLayout: (UInt16, UInt16)
-    var blockPadding: Float
     var blockWidth: Float
     var blockHeight: Float
     
     init(device: MTLDevice, position: float3) {
         self.device = device
         self.position = position
-        self.blockPadding = 0.5
         self.blockWidth = 0.4
         self.blockHeight = 0.2
         self.gridLayout = (7, 16)
     }
     
     public func render(commandEncoder: MTLRenderCommandEncoder, viewProjectionMatrix: float4x4, time: Float) {
-        guard let delegate = delegate else { return }
+        guard let delegate = cubeVBO else { return }
         
         commandEncoder.setVertexBuffer(delegate.vertexBuffer, offset: 0, index: 0)
         for row in 0..<gridLayout.1 {

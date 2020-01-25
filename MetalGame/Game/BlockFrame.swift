@@ -13,10 +13,8 @@ import MetalKit
 class BlockFrame : Renderable {
     
     var device: MTLDevice
-    var vertexBuffer: MTLBuffer!
-    var indexBuffer: MTLBuffer!
     var uniforms: Uniforms!
-    let geometry: Cube
+    var cubeVBO: VertexBufferDelegate?
     
     /// The center of the frame, defaluts to [0,0,0]
     var position: float3
@@ -28,27 +26,10 @@ class BlockFrame : Renderable {
         self.device = device
         self.position = position
         self.size = size
-        self.geometry = Cube()
-        self.buildBuffers()
-    }
-    
-    private func buildBuffers() {
-        let vertices = geometry.vertices
-        let indices = geometry.indices
-        
-        if let buffer = device.makeBuffer(bytes: vertices,
-                          length: MemoryLayout<Vertex>.stride * vertices.count,
-                          options: .cpuCacheModeWriteCombined) {
-            vertexBuffer = buffer
-        } else { fatalError("BlockGrid:buildBuffers Couldn't make buffer!") }
-        if let buffer = device.makeBuffer(bytes: indices,
-                                          length: MemoryLayout<UInt16>.stride * indices.count,
-                                          options: .cpuCacheModeWriteCombined) {
-            indexBuffer = buffer
-        } else { fatalError("BlockGrid:buildBuffers Couldn't make buffer!") }
     }
     
     public func render(commandEncoder: MTLRenderCommandEncoder, viewProjectionMatrix: float4x4, time: Float) {
+        guard let delegate = cubeVBO else { return }
         
         let modelMatrix1 = float4x4(translationBy: [0,size[1]/2,0]) * float4x4(scaleBy: [100, 0.05, 0.05])
         let modelMatrix2 = float4x4(translationBy: [0,-size[1]/2,0]) * float4x4(scaleBy: [100, 0.05, 0.05])
@@ -60,9 +41,9 @@ class BlockFrame : Renderable {
             let mvpMatrix = viewProjectionMatrix * m // scale and then translate
             uniforms = Uniforms(modelViewProjectionMatrix: mvpMatrix, xOffset: 0)
             
-            commandEncoder.setVertexBuffer(vertexBuffer, offset: 0, index: 0)
+            commandEncoder.setVertexBuffer(delegate.vertexBuffer, offset: 0, index: 0)
             commandEncoder.setVertexBytes(&uniforms, length: MemoryLayout<Uniforms>.stride, index: 1)
-            commandEncoder.drawIndexedPrimitives(type: .triangle, indexCount: geometry.indices.count, indexType: .uint16, indexBuffer: indexBuffer, indexBufferOffset: 0)
+            commandEncoder.drawIndexedPrimitives(type: .triangle, indexCount: delegate.indices.count, indexType: .uint16, indexBuffer: delegate.indexBuffer, indexBufferOffset: 0)
         }
     }
 }
