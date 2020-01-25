@@ -15,7 +15,6 @@ class BlockNode : Node, Renderable {
     var indexBuffer: MTLBuffer!
     var uniforms: Uniforms!
     
-    
     func render(commandEncoder: MTLRenderCommandEncoder, viewProjectionMatrix: float4x4, time: Float) {
         commandEncoder.setVertexBuffer(vertexBuffer, offset: 0, index: 0)
     }
