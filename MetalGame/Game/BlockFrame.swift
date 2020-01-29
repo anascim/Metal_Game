@@ -38,7 +38,7 @@ class BlockFrame : Renderable {
         let modelMtxs = [modelMatrix1, modelMatrix2, modelMatrix3, modelMatrix4]
         
         for m in modelMtxs {
-            let mvpMatrix = viewProjectionMatrix * m // scale and then translate
+            let mvpMatrix = viewProjectionMatrix * m
             uniforms = Uniforms(modelViewProjectionMatrix: mvpMatrix, xOffset: 0)
             
             commandEncoder.setVertexBuffer(delegate.vertexBuffer, offset: 0, index: 0)

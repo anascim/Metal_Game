@@ -12,8 +12,8 @@ class BreakoutScene : Scene {
     
     let blockGrid: BlockGrid
     let blockFrame: BlockFrame
-    let paddle: Paddle
-    let cubicBall: CubicBall
+    let paddle: RectNode
+    let cubicBall: RectNode
     
     let redCube: CubeVBO
     let whiteCube: CubeVBO
@@ -47,12 +47,11 @@ class BreakoutScene : Scene {
         blockGrid = BlockGrid(device: device, position: [-1.2,3,0])
         blockFrame = BlockFrame(device: device, size: [Float(view.drawableSize.width*0.004),
                                                        Float(view.drawableSize.height*0.004)])
-        paddle = Paddle()
-        cubicBall = CubicBall()
         
-        cubicBall.cubeVBO = whiteCube
+        paddle = RectNode(position: [0,-3,0], size: [0.8,0.2], vbo: redCube)
+        cubicBall = RectNode(position: [0,-2,0], size: [0.06,0.06], vbo: whiteCube)
+        
         blockGrid.cubeVBO = greenCube
-        paddle.cubeVBO = redCube
         blockFrame.cubeVBO = blueCube
         
         super.init(device: device, view: view)
@@ -63,35 +62,28 @@ class BreakoutScene : Scene {
         
         let gridNode = Node()
         let frameNode = Node()
-        let paddleNode = Node()
-        let ballNode = Node()
         
-        gridNode.renderable = blockGrid
-        frameNode.renderable = blockFrame
-        paddleNode.renderable = paddle
-        ballNode.renderable = cubicBall
-        
-        rootNode.addChild(gridNode)
-        rootNode.addChild(frameNode)
-        rootNode.addChild(paddleNode)
-        rootNode.addChild(ballNode)
+//        rootNode.addChild(gridNode)
+//        rootNode.addChild(frameNode)
+        rootNode.addChild(paddle)
+        rootNode.addChild(cubicBall)
     }
     
     override func update() {
-        if cubicBall.xPosition > worldWidth/2 || cubicBall.xPosition < -worldWidth/2 {
+        if cubicBall.position.x > worldWidth/2 || cubicBall.position.x < -worldWidth/2 {
             xVel = -xVel
         }
-        if cubicBall.yPosition >= worldHeight/2 || cubicBall.yPosition < -worldHeight/2 {
+        if cubicBall.position.y >= worldHeight/2 || cubicBall.position.y < -worldHeight/2 {
             yVel = -yVel
         }
-        cubicBall.xPosition += xVel
-        cubicBall.yPosition += yVel
+        cubicBall.position.x += xVel
+        cubicBall.position.y += yVel
     }
     
     override func touchMove(location: CGPoint) {
         let pctx = Float(location.x / view.frame.width)
         let relativePosX = pctx * worldWidth - worldWidth/2
         print("relativePosX: \(relativePosX), location: \(location), pctx: \(pctx), frameWidth: \(view.frame.width)")
-        paddle.xPosition = Float(relativePosX)
+        paddle.position.x = Float(relativePosX)
     }
 }

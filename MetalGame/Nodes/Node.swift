@@ -6,10 +6,9 @@
 //  Copyright © 2020 Alex Nascimento. All rights reserved.
 //
 
-import simd
-import Foundation
+import MetalKit
 
-// This class was heavily influenced by Warren More's Pickind and Hit Testing in Metal:
+// This class is an adaptation of Warren More's Picking and Hit Testing in Metal:
 // https://metalbyexample.com/picking-hit-testing/
 // https://github.com/metal-by-example/metal-picking/blob/master/Shared/Scene/Node.swift
 
@@ -17,7 +16,7 @@ import Foundation
 /// A node always has one parent and possibly multiple children. Removing a node from it's parent will destroy the node and all it's children.
 /// Subclassing renderable nodes should fill in the renderable property on initialization.
 
-class Node : Equatable {
+class Node : Equatable, Renderable {
     
     /// Unique identifier for each node.
     let id = UUID()
@@ -29,8 +28,9 @@ class Node : Equatable {
     
     weak var parent: Node?
     var children = [Node]()
-    var renderable: Renderable?
     
+    var vbo: VertexBufferDelegate?
+    var uniforms: Uniforms!
     
     func addChild(_ node: Node) {
         if node.parent != nil {
@@ -47,13 +47,30 @@ class Node : Equatable {
         parent?.removeChild(self)
     }
     
-    var position: float3
+    var transform: float4x4
     
-    // TODO: include rotation and scale to nodes
-//    var rotation: float4
-//    var scale: float3
+    var worldTransform: float4x4 {
+        if let parent = parent {
+            return parent.worldTransform * transform
+        } else {
+            return transform
+        }
+    }
     
     init() {
-        position = float3.zero
+        transform = matrix_identity_float4x4
     }
+    
+    func render(commandEncoder: MTLRenderCommandEncoder, viewProjectionMatrix: float4x4, time: Float) {
+        guard let vbo = vbo else { return }
+        
+        let mvp = viewProjectionMatrix * worldTransform
+        
+        uniforms = Uniforms(modelViewProjectionMatrix: mvp, xOffset: 0)
+        
+        commandEncoder.setVertexBuffer(vbo.vertexBuffer, offset: 0, index: 0)
+        commandEncoder.setVertexBytes(&uniforms, length: MemoryLayout<Uniforms>.stride, index: 1)
+        commandEncoder.drawIndexedPrimitives(type: .triangle, indexCount: vbo.indices.count, indexType: .uint16, indexBuffer: vbo.indexBuffer, indexBufferOffset: 0)
+    }
+    
 }

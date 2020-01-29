@@ -8,10 +8,6 @@
 
 import simd
 
-typealias float2 = SIMD2<Float>
-typealias float3 = SIMD3<Float>
-typealias float4 = SIMD4<Float>
-
 struct Vertex {
     var position: float3
     var color: float4
@@ -20,4 +16,28 @@ struct Vertex {
 public struct Uniforms {
     var modelViewProjectionMatrix: float4x4
     var xOffset: Float
+}
+
+typealias float2 = SIMD2<Float>
+typealias float3 = SIMD3<Float>
+typealias float4 = SIMD4<Float>
+
+extension float2 {
+    var x: Float { return self[0] }
+    var y: Float { return self[1] }
+    var width: Float { return self[0] }
+    var height: Float { return self[1] }
+}
+
+extension float3 {
+    var x: Float { return self[0] }
+    var y: Float { return self[1] }
+    var z: Float { return self[2] }
+}
+
+extension float4 {
+    var x: Float { return self[0] }
+    var y: Float { return self[1] }
+    var z: Float { return self[2] }
+    var w: Float { return self[3] }
 }
