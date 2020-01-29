@@ -22,7 +22,7 @@ struct Cube : Geometry {
     }
     
     init(color1: float4, color2: float4) {
-        self.vertices = Cube.buildVertices(color1: color1, color2: color2)
+        self.vertices = Cube.buildVertices(frontColor: color1, backColor: color2)
         self.indices = Cube.buildIndices()
     }
     
@@ -39,18 +39,45 @@ struct Cube : Geometry {
         ]
     }
     
-    static func buildVertices(color1: float4, color2: float4) -> [Vertex] {
+    static func buildVertices(frontColor: float4, backColor: float4) -> [Vertex] {
         return [
-            Vertex(position: [-1.0, -1.0, 1.0], color: color1),
-            Vertex(position: [-1.0,  1.0, 1.0], color: color1),
-            Vertex(position: [-1.0, -1.0,-1.0], color: color1),
-            Vertex(position: [-1.0,  1.0,-1.0], color: color1),
-            Vertex(position: [ 1.0, -1.0, 1.0], color: color1),
-            Vertex(position: [ 1.0,  1.0, 1.0], color: color1),
-            Vertex(position: [ 1.0, -1.0,-1.0], color: color1),
-            Vertex(position: [ 1.0,  1.0,-1.0], color: color1)
+            Vertex(position: [-1.0, -1.0, 1.0], color: frontColor),
+            Vertex(position: [-1.0,  1.0, 1.0], color: frontColor),
+            Vertex(position: [-1.0, -1.0,-1.0], color: backColor),
+            Vertex(position: [-1.0,  1.0,-1.0], color: backColor),
+            Vertex(position: [ 1.0, -1.0, 1.0], color: frontColor),
+            Vertex(position: [ 1.0,  1.0, 1.0], color: frontColor),
+            Vertex(position: [ 1.0, -1.0,-1.0], color: backColor),
+            Vertex(position: [ 1.0,  1.0,-1.0], color: backColor)
         ]
     }
+    
+    static func buildVertices(leftColor: float4, rightColor: float4) -> [Vertex] {
+        return [
+            Vertex(position: [-1.0, -1.0, 1.0], color: leftColor),
+            Vertex(position: [-1.0,  1.0, 1.0], color: leftColor),
+            Vertex(position: [-1.0, -1.0,-1.0], color: leftColor),
+            Vertex(position: [-1.0,  1.0,-1.0], color: leftColor),
+            Vertex(position: [ 1.0, -1.0, 1.0], color: rightColor),
+            Vertex(position: [ 1.0,  1.0, 1.0], color: rightColor),
+            Vertex(position: [ 1.0, -1.0,-1.0], color: rightColor),
+            Vertex(position: [ 1.0,  1.0,-1.0], color: rightColor)
+        ]
+    }
+    
+    static func buildVertices(topColor: float4, bottomColor: float4) -> [Vertex] {
+        return [
+            Vertex(position: [-1.0, -1.0, 1.0], color: bottomColor),
+            Vertex(position: [-1.0,  1.0, 1.0], color: topColor),
+            Vertex(position: [-1.0, -1.0,-1.0], color: bottomColor),
+            Vertex(position: [-1.0,  1.0,-1.0], color: topColor),
+            Vertex(position: [ 1.0, -1.0, 1.0], color: bottomColor),
+            Vertex(position: [ 1.0,  1.0, 1.0], color: topColor),
+            Vertex(position: [ 1.0, -1.0,-1.0], color: bottomColor),
+            Vertex(position: [ 1.0,  1.0,-1.0], color: topColor)
+        ]
+    }
+    
     
     static func buildVertices() -> [Vertex] {
         return [

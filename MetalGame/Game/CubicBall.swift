@@ -1,26 +1,25 @@
 //
-//  Padle.swift
+//  CubicBall.swift
 //  MetalGame
 //
-//  Created by Alex Nascimento on 24/01/20.
+//  Created by Alex Nascimento on 29/01/20.
 //  Copyright © 2020 Alex Nascimento. All rights reserved.
 //
 
 import MetalKit
 
-class Paddle : Renderable {
+class CubicBall : Renderable {
     
     var uniforms: Uniforms!
     var xPosition: Float = 0
-    let yPosition: Float = -3
+    var yPosition: Float = -2
     var cubeVBO: VertexBufferDelegate?
-    let width: Float = 0.8
-    let height: Float = 0.2
+    let radius: Float = 0.06
     
     func render(commandEncoder: MTLRenderCommandEncoder, viewProjectionMatrix: float4x4, time: Float) {
         guard let delegate = cubeVBO else { return }
         
-        let scale = float4x4(scaleBy: [width/2, height/2, 0.1])
+        let scale = float4x4(scaleBy: [radius, radius, 0.1])
         
         let translation = float4x4(translationBy: [xPosition,yPosition,0])
         

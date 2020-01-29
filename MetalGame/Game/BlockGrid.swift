@@ -56,6 +56,7 @@ class BlockGrid : Renderable {
                 // Render pass
                 // -----------
                 
+                commandEncoder.setVertexBuffer(delegate.vertexBuffer, offset: 0, index: 0)
                 commandEncoder.setVertexBytes(&uniforms, length: MemoryLayout<Uniforms>.stride, index: 1)
                 commandEncoder.drawIndexedPrimitives(type: .triangle, indexCount: delegate.indices.count, indexType: .uint16, indexBuffer: delegate.indexBuffer, indexBufferOffset: 0)
             }

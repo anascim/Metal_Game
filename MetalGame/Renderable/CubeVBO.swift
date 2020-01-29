@@ -16,13 +16,13 @@ class CubeVBO : VertexBufferDelegate {
     var vertices: [Vertex]!
     var indices: [UInt16]!
     
-    required init(device: MTLDevice) {
+    required init(device: MTLDevice, vertices: [Vertex]) {
         self.device = device
-        buildBuffers()
+        buildBuffers(vertices)
     }
     
-    func buildBuffers() {
-        self.vertices = Cube.buildVertices()
+    func buildBuffers(_ vertices: [Vertex]) {
+        self.vertices = vertices
         self.indices = Cube.buildIndices()
 
         if let buffer = device.makeBuffer(bytes: vertices,
