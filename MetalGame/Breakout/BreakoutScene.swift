@@ -34,6 +34,7 @@ class BreakoutScene : Scene {
         // ----------------------------------
         // Initialize buffers and renderables
         // ----------------------------------
+        
         redCube = CubeVBO(device: device,
                           vertices: Cube.buildVertices(topColor: [0.8,0,0,1], bottomColor: [0.4,0,0,1]))
         whiteCube = CubeVBO(device: device,
@@ -47,24 +48,18 @@ class BreakoutScene : Scene {
         blockGrid = BlockGrid(device: device, position: [-1.2,3,0])
         blockFrame = BlockFrame(device: device, size: [Float(view.drawableSize.width*0.004),
                                                        Float(view.drawableSize.height*0.004)])
+        // --------------------
+        // Setup nodes on scene
+        // --------------------
         
         paddle = RectNode(position: [0,-3,0], size: [0.8,0.2], vbo: redCube)
-        cubicBall = RectNode(position: [0,-2,0], size: [0.06,0.06], vbo: whiteCube)
+        cubicBall = RectNode(position: [0,-2,0], size: [0.12,0.12], vbo: whiteCube)
         
         blockGrid.cubeVBO = greenCube
         blockFrame.cubeVBO = blueCube
         
         super.init(device: device, view: view)
         
-        // ---------------------
-        // Set up nodes on scene
-        // ---------------------
-        
-        let gridNode = Node()
-        let frameNode = Node()
-        
-//        rootNode.addChild(gridNode)
-//        rootNode.addChild(frameNode)
         rootNode.addChild(paddle)
         rootNode.addChild(cubicBall)
     }
