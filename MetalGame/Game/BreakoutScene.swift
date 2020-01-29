@@ -1,5 +1,5 @@
 //
-//  GameScene.swift
+//  BreakoutScene.swift
 //  MetalGame
 //
 //  Created by Alex Nascimento on 18/01/20.

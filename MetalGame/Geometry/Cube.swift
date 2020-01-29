@@ -6,25 +6,10 @@
 //  Copyright © 2020 Alex Nascimento. All rights reserved.
 //
 
+/// Contains static methods that build vertices and indices that describe a cube.
+/// Should not be instantiated. Use the static methods instead.
+
 struct Cube : Geometry {
-    
-    var vertices: [Vertex]
-    var indices: [UInt16]
-    
-    init() {
-        self.vertices = Cube.buildVertices()
-        self.indices = Cube.buildIndices()
-    }
-    
-    init(color: float4) {
-        self.vertices = Cube.buildVertices(color: color)
-        self.indices = Cube.buildIndices()
-    }
-    
-    init(color1: float4, color2: float4) {
-        self.vertices = Cube.buildVertices(frontColor: color1, backColor: color2)
-        self.indices = Cube.buildIndices()
-    }
     
     static func buildVertices(color: float4) -> [Vertex] {
         return [

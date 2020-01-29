@@ -6,20 +6,10 @@
 //  Copyright © 2020 Alex Nascimento. All rights reserved.
 //
 
+/// Contains static methods that build vertices and indices that describe a plane.
+/// Should not be instantiated. Use the static methods instead.
+
 struct Plane : Geometry {
-    
-    var vertices: [Vertex]
-    var indices: [UInt16]
-    
-    init() {
-        self.vertices = Plane.buildVertices()
-        self.indices = Plane.buildIndices()
-    }
-    
-    init(color: float4) {
-        self.vertices = Plane.buildVertices(color: color)
-        self.indices = Plane.buildIndices()
-    }
     
     static func buildVertices() -> [Vertex] {
         return [

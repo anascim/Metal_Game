@@ -8,7 +8,10 @@
 
 import MetalKit
 
-class Scene : Node, Renderable {
+/// Scene serves as the root node although it isn't one.
+/// Every node has a parent and if it is removed from that parent, ARC deinitializes it.
+
+class Scene :  Renderable {
     
     var device: MTLDevice
     var view: MTKView
@@ -17,7 +20,6 @@ class Scene : Node, Renderable {
     init(device: MTLDevice, view: MTKView) {
         self.device = device
         self.view = view
-        super.init()
     }
     
     func addChild(_ node: Node) {

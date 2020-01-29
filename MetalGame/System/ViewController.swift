@@ -1,5 +1,5 @@
 //
-//  GameViewController.swift
+//  ViewController.swift
 //  MetalGame
 //
 //  Created by Alex Nascimento on 06/01/20.

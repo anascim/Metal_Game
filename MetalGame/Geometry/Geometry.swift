@@ -7,14 +7,11 @@
 //
 
 /// This protocol is intended for geometry description only
-/// Classes such as Cube, Piramid etc must implement this protocol
-/// No Metal logic or buffer creation
-/// Only vertices and indices and methods linked with those
+/// Structs such as Cube, Plane etc must implement this protocol
+/// No Metal logic or buffer creation.
+/// Only static methods for creating vertices and indices.
 
 protocol Geometry {
-    
-    var vertices: [Vertex] { get set }
-    var indices: [UInt16] { get set }
     
     static func buildVertices() -> [Vertex]
     static func buildIndices() -> [UInt16]

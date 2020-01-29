@@ -1,5 +1,5 @@
 //
-//  Plane.swift
+//  TranslucentPlane.swift
 //  MetalGame
 //
 //  Created by Alex Nascimento on 24/01/20.
