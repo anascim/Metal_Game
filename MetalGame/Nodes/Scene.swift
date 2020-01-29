@@ -22,7 +22,10 @@ class Scene :  Renderable {
         self.view = view
     }
     
+    func update() {}
+    
     func render(commandEncoder: MTLRenderCommandEncoder, viewProjectionMatrix: float4x4, time: Float) {
+        update()
         rootNode.children.forEach { $0.renderable?.render(commandEncoder: commandEncoder, viewProjectionMatrix: viewProjectionMatrix, time: time) }
     }
     

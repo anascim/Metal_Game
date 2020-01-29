@@ -23,6 +23,12 @@ class BreakoutScene : Scene {
     // This plane is intended to be used to render the ball on the fragment shader
 //    let translucentPlane: TranslucentPlane
     
+    lazy var worldWidth = Float(view.drawableSize.width*0.004)
+    lazy var worldHeight = Float(view.drawableSize.height*0.004)
+    
+    var xVel: Float = 0.03
+    var yVel: Float = 0.02
+    
     override init(device: MTLDevice, view: MTKView) {
         
         // ----------------------------------
@@ -71,9 +77,19 @@ class BreakoutScene : Scene {
         rootNode.addChild(ballNode)
     }
     
+    override func update() {
+        if cubicBall.xPosition > worldWidth/2 || cubicBall.xPosition < -worldWidth/2 {
+            xVel = -xVel
+        }
+        if cubicBall.yPosition >= worldHeight/2 || cubicBall.yPosition < -worldHeight/2 {
+            yVel = -yVel
+        }
+        cubicBall.xPosition += xVel
+        cubicBall.yPosition += yVel
+    }
+    
     override func touchMove(location: CGPoint) {
-        let worldWidth = view.drawableSize.width*0.004
-        let pctx = (location.x / view.frame.width)
+        let pctx = Float(location.x / view.frame.width)
         let relativePosX = pctx * worldWidth - worldWidth/2
         print("relativePosX: \(relativePosX), location: \(location), pctx: \(pctx), frameWidth: \(view.frame.width)")
         paddle.xPosition = Float(relativePosX)

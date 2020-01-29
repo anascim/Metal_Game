@@ -19,7 +19,11 @@ class CubicBall : Renderable {
     func render(commandEncoder: MTLRenderCommandEncoder, viewProjectionMatrix: float4x4, time: Float) {
         guard let delegate = cubeVBO else { return }
         
-        let scale = float4x4(scaleBy: [radius, radius, 0.1])
+        // ------
+        // Update
+        // ------
+        
+        let scale = float4x4(scaleBy: [radius, radius, radius])
         
         let translation = float4x4(translationBy: [xPosition,yPosition,0])
         
