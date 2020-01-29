@@ -19,12 +19,12 @@ class Paddle : Renderable {
         
         let scale = float4x4(scaleBy: [0.4, 0.1, 0.1])
         
-        let translation = float4x4(translationBy: [0,-3,0])
+        let translation = float4x4(translationBy: [xPosition,-3,0])
         
         let modelMatrix = translation * scale // scale and then translate
         let mvpMatrix = viewProjectionMatrix * modelMatrix
         
-        uniforms = Uniforms(modelViewProjectionMatrix: mvpMatrix, xOffset: xPosition)
+        uniforms = Uniforms(modelViewProjectionMatrix: mvpMatrix, xOffset: 0)
         
         // -----------
         // Render pass

@@ -48,10 +48,10 @@ class BreakoutScene : Scene {
     }
     
     override func touchMove(location: CGPoint) {
-        // TODO: this conversion is not perfect. Make better screen to world conversion.
-        let pctx = (location.x * 2 / view.drawableSize.width)
-        let relativePosX = pctx * 6.624 - 3.312
-        print("relativePosX: \(relativePosX), location: \(location), drawableSizeW: \(view.drawableSize.width)")
+        let worldWidth = view.drawableSize.width*0.004
+        let pctx = (location.x / view.frame.width)
+        let relativePosX = pctx * worldWidth - worldWidth/2
+        print("relativePosX: \(relativePosX), location: \(location), pctx: \(pctx), frameWidth: \(view.frame.width)")
         paddle.xPosition = Float(relativePosX)
     }
 }
