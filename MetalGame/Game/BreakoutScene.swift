@@ -65,10 +65,10 @@ class BreakoutScene : Scene {
         paddleNode.renderable = paddle
         ballNode.renderable = cubicBall
         
-        addChild(gridNode)
-        addChild(frameNode)
-        addChild(paddleNode)
-        addChild(ballNode)
+        rootNode.addChild(gridNode)
+        rootNode.addChild(frameNode)
+        rootNode.addChild(paddleNode)
+        rootNode.addChild(ballNode)
     }
     
     override func touchMove(location: CGPoint) {

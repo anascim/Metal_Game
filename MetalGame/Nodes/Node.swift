@@ -9,6 +9,10 @@
 import simd
 import Foundation
 
+// This class was heavily influenced by Warren More's Pickind and Hit Testing in Metal:
+// https://metalbyexample.com/picking-hit-testing/
+// https://github.com/metal-by-example/metal-picking/blob/master/Shared/Scene/Node.swift
+
 /// Node of the game engine. Dictates the positioning of objects in the scene hierarchy.
 /// A node always has one parent and possibly multiple children. Removing a node from it's parent will destroy the node and all it's children.
 /// Subclassing renderable nodes should fill in the renderable property on initialization.
@@ -23,10 +27,25 @@ class Node : Equatable {
         return lhs.id == rhs.id
     }
     
-    // TODO: resolve the dependency problem on the parent-child node relation (weak or unowned not supported on arrays)
-//    var parent: Node?
-//    var children: [Node]?
+    weak var parent: Node?
+    var children = [Node]()
     var renderable: Renderable?
+    
+    
+    func addChild(_ node: Node) {
+        if node.parent != nil {
+            node.removeFromParent()
+        }
+        children.append(node)
+    }
+    
+    func removeChild(_ node: Node) {
+        children.removeAll(where: { $0 == node })
+    }
+    
+    func removeFromParent() {
+        parent?.removeChild(self)
+    }
     
     var position: float3
     
