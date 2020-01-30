@@ -22,14 +22,15 @@ class BreakoutScene : Scene {
     let greenCube: CubeVBO
     let yellowCube: CubeVBO
     
-    lazy var worldWidth = Float(view.drawableSize.width*0.004)
-    lazy var worldHeight = Float(view.drawableSize.height*0.004)
+    var worldWidth: Float = 3.3312 //Float(view.drawableSize.width*0.004)
+    var worldHeight: Float = 7.168 //Float(view.drawableSize.height*0.004)
     
     var xVel: Float
     var yVel: Float
     
     var level: Int = 1
     var extraBalls: Int = 5
+    let maxBalls: Int = 10
     let ballInitPosition: float3 = [0,-2,0]
     let ballInitVelocity: float2 = [0.03, 0.02]
     
@@ -53,11 +54,9 @@ class BreakoutScene : Scene {
         blockGrid = BlockGrid(position: [0,0,0], gridAspect: (7,16), layout: LevelManager.getLevel(level), blockSize: [0.4,0.2], vbo1: greenCube, vbo2: yellowCube, vbo3: redCube)
         blockGrid.position = [blockGrid.centralizedOriginX, 3, 0] // note: if position is updated more than once it breaks
         
-        blockFrame = BlockFrame(frame: [Float(view.drawableSize.width*0.004),
-                                    Float(view.drawableSize.height*0.004)], vbo: blueCube)
+        blockFrame = BlockFrame(frame: [worldWidth, worldHeight], vbo: blueCube)
         
-        lifeMeter = LifeMeter(frame: [Float(view.drawableSize.width*0.004),
-                                      Float(view.drawableSize.height*0.004)], vbo: whiteCube, maxLife: 10)
+        lifeMeter = LifeMeter(frame: [worldWidth, worldHeight], vbo: whiteCube, maxLife: 10)
         // --------------------
         // Setup nodes on scene
         // --------------------
@@ -128,7 +127,7 @@ class BreakoutScene : Scene {
                         level += 1
                         if level >= LevelManager.levels.count { level = 1 }
                         buildLevel(level: LevelManager.getLevel(level))
-                        extraBalls += 1
+                        if extraBalls < maxBalls-1 { extraBalls += 1 }
                         lifeMeter.setExtraBalls(extraBalls)
                     }
                     return // return garantees to always hit only one block at a time
@@ -175,13 +174,18 @@ class BreakoutScene : Scene {
     override func touchBegan(location: CGPoint) {
         let pctx = Float(location.x / view.frame.width)
         let relativePosX = pctx * worldWidth - worldWidth/2
-        paddle.position.x = Float(relativePosX)
+        paddle.position[0] = Float(relativePosX)
 //      print("relativePosX: \(relativePosX), location: \(location), pctx: \(pctx), frameWidth: \(view.frame.width)")
+        level += 1
+        if level >= LevelManager.levels.count { level = 1 }
+        buildLevel(level: LevelManager.getLevel(level))
+        extraBalls += 1
+        lifeMeter.setExtraBalls(extraBalls)
     }
     
     override func touchMoved(location: CGPoint) {
         let pctx = Float(location.x / view.frame.width)
         let relativePosX = pctx * worldWidth - worldWidth/2
-        paddle.position.x = Float(relativePosX)
+        paddle.position[0] = Float(relativePosX)
     }
 }
