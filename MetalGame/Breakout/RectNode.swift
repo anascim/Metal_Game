@@ -10,8 +10,17 @@ import MetalKit
 
 class RectNode : Node {
     
-    var position: float3 { didSet { update() } }
-    var size: float2 { didSet { update() } }
+    var position: float3 { didSet { updateTransform() } }
+    var size: float2 { didSet { updateTransform() } }
+    var rect: float4 {
+        get {
+            let l = position.x - size.width/2
+            let t = position.y + size.height/2
+            let r = position.x + size.width/2
+            let b = position.y - size.height/2
+            return [l,t,r,b]
+        }
+    }
     
     private var modelMatrix: float4x4
     
@@ -23,10 +32,10 @@ class RectNode : Node {
         super.init()
         self.vbo = vbo
         
-        update()
+        updateTransform()
     }
     
-    private func update() {
+    private func updateTransform() {
         
         let scale = float4x4(scaleBy: [size.x/2, size.y/2, 0.05])
         let translation = float4x4(translationBy: [position.x,position.y,0])

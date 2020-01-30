@@ -38,7 +38,11 @@ class ViewController: UIViewController {
         mtkView.delegate = renderer
     }
     
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        renderer.scene?.touchBegan(location: touches.first!.location(in: mtkView))
+    }
+    
     override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
-        renderer.scene?.touchMove(location: touches.first!.location(in: mtkView))
+        renderer.scene?.touchMoved(location: touches.first!.location(in: mtkView))
     }
 }

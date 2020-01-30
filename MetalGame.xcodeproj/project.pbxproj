@@ -13,6 +13,7 @@
 		8C52AF9123D395BE0045D07E /* Scene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C52AF9023D395BE0045D07E /* Scene.swift */; };
 		8C52AF9723D396CD0045D07E /* BreakoutScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C52AF9623D396CD0045D07E /* BreakoutScene.swift */; };
 		8C9C6B9023E219F600978D02 /* RectNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C9C6B8F23E219F600978D02 /* RectNode.swift */; };
+		8C9C6B9223E2679700978D02 /* Collision.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C9C6B9123E2679600978D02 /* Collision.swift */; };
 		8C9D000423C40FE300864E03 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C9D000323C40FE300864E03 /* AppDelegate.swift */; };
 		8C9D000923C40FE400864E03 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C9D000823C40FE400864E03 /* ViewController.swift */; };
 		8C9D000E23C40FE400864E03 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8C9D000C23C40FE400864E03 /* Main.storyboard */; };
@@ -41,6 +42,7 @@
 		8C52AF9023D395BE0045D07E /* Scene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Scene.swift; sourceTree = "<group>"; };
 		8C52AF9623D396CD0045D07E /* BreakoutScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BreakoutScene.swift; sourceTree = "<group>"; };
 		8C9C6B8F23E219F600978D02 /* RectNode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RectNode.swift; sourceTree = "<group>"; };
+		8C9C6B9123E2679600978D02 /* Collision.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Collision.swift; sourceTree = "<group>"; };
 		8C9D000023C40FE300864E03 /* MetalGame.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MetalGame.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		8C9D000323C40FE300864E03 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		8C9D000823C40FE400864E03 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -125,6 +127,7 @@
 				8C9C6B8F23E219F600978D02 /* RectNode.swift */,
 				8C52AF9623D396CD0045D07E /* BreakoutScene.swift */,
 				8CC64E1B23DBCB0200B861BC /* TranslucentPlane.swift */,
+				8C9C6B9123E2679600978D02 /* Collision.swift */,
 			);
 			path = Breakout;
 			sourceTree = "<group>";
@@ -258,6 +261,7 @@
 				8C9C6B9023E219F600978D02 /* RectNode.swift in Sources */,
 				8CC64E1C23DBCB0200B861BC /* TranslucentPlane.swift in Sources */,
 				8CB9885723DA6B6700023B8D /* StandardPipeline.swift in Sources */,
+				8C9C6B9223E2679700978D02 /* Collision.swift in Sources */,
 				8C9D000423C40FE300864E03 /* AppDelegate.swift in Sources */,
 				8CC64E1623DB8F0600B861BC /* VertexBufferDelegate.swift in Sources */,
 				8CC64E2123DBCF0300B861BC /* PlaneVBO.swift in Sources */,

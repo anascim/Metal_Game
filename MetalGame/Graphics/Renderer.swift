@@ -57,7 +57,7 @@ extension Renderer : MTKViewDelegate {
         let renderPassDescriptor = view.currentRenderPassDescriptor,
         let drawable = view.currentDrawable else { return }
     
-        renderPassDescriptor.colorAttachments[0].clearColor = .init(red: 0.7, green: 0.12, blue: 0.0, alpha: 1.0)
+        renderPassDescriptor.colorAttachments[0].clearColor = .init(red: 0.1, green: 0.1, blue: 0.1, alpha: 1.0)
     
         guard let commandEncoder = commandBuffer.makeRenderCommandEncoder(descriptor: renderPassDescriptor) else { return }
         
