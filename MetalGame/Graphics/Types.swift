@@ -23,7 +23,7 @@ typealias float3 = SIMD3<Float>
 typealias float4 = SIMD4<Float>
 
 extension float2 {
-    var x: Float { return self[0] }
+    var x: Float { get { return self[0]} set { self[0] = newValue } }
     var y: Float { return self[1] }
     var width: Float { return self[0] }
     var height: Float { return self[1] }

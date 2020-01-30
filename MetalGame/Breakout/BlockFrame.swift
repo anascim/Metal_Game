@@ -18,12 +18,12 @@ class BlockFrame : Node {
     let top: RectNode
     let bottom: RectNode
     
-    init(size: float2, vbo: VertexBufferDelegate) {
-        frame = size
-        left = RectNode(position: [-frame[0]/2,0,0], size: [0.05,100], vbo: vbo)
-        right = RectNode(position: [frame[0]/2,0,0], size: [0.05,100], vbo: vbo)
-        top = RectNode(position: [0,frame[1]/2,0], size: [100,0.05], vbo: vbo)
-        bottom = RectNode(position: [0,-frame[1]/2,0], size: [100,0.05], vbo: vbo)
+    init(frame: float2, vbo: VertexBufferDelegate) {
+        self.frame = frame
+        left = RectNode(position: [-frame.width/2,0,0], size: [0.05,100], vbo: vbo)
+        right = RectNode(position: [frame.width/2,0,0], size: [0.05,100], vbo: vbo)
+        top = RectNode(position: [0,frame.height/2,0], size: [100,0.05], vbo: vbo)
+        bottom = RectNode(position: [0,-frame.height/2,0], size: [100,0.05], vbo: nil)
         
         super.init()
         
