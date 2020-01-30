@@ -91,7 +91,17 @@ class BreakoutScene : Scene {
         
         func paddleCollision() {
             if Collision.check(r1: paddle.rect, r2: cubicBall.rect) {
+                // pegar valor de -1 até 1, baseado na distância entre o centro da bola e o centro do paddle,
+                // com relação às extremidades: centro - width/2 / centro + width/2.
+                let ndist: Float = simd_clamp((cubicBall.position.x - paddle.position.x) / (paddle.size.width/2), -1.0, 1.0)
                 yVel = abs(yVel)
+                let f: Float = 0.02
+                // esse valor deve então ser aplicado à velocidade da bola.
+                // o paddle soma um vetor de módulo v ao vetor velocidade após mudança de direção.
+                xVel = xVel*0.7 + f * ndist
+                let sin = sqrtf(1.005 - ndist*ndist)
+                yVel = simd_min(yVel*0.7 + f * sin, 0.12) // max y velocity
+                cubicBall.position.y = paddle.position.y + paddle.size.height/2 + cubicBall.size.height/2
             }
         }
         
@@ -104,7 +114,8 @@ class BreakoutScene : Scene {
                     case .up: yVel = -yVel
                     case .right: xVel = -xVel
                     case .down: yVel = -yVel
-                    }; return // return garantees to always hit only one block
+                    }
+                    return // return garantees to always hit only one block
                 }
             }
         }
