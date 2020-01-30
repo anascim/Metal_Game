@@ -52,6 +52,10 @@ class Node : Equatable, Renderable {
         children.removeAll(where: { $0 == node })
     }
     
+    func removeAllChildren() {
+        children.removeAll()
+    }
+    
     func removeFromParent() {
         parent?.removeChild(self)
         children.forEach{ $0.removeFromParent() }

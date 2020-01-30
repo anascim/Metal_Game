@@ -14,6 +14,7 @@ class BreakoutScene : Scene {
     let blockFrame: BlockFrame
     let paddle: RectNode
     let cubicBall: RectNode
+    let lifeMeter: LifeMeter
     
     let redCube: CubeVBO
     let whiteCube: CubeVBO
@@ -28,7 +29,7 @@ class BreakoutScene : Scene {
     var yVel: Float
     
     var level: Int = 1
-    var life: UInt8 = 5
+    var extraBalls: Int = 5
     let ballInitPosition: float3 = [0,-2,0]
     let ballInitVelocity: float2 = [0.03, 0.02]
     
@@ -52,8 +53,11 @@ class BreakoutScene : Scene {
         blockGrid = BlockGrid(position: [0,0,0], gridAspect: (7,16), layout: LevelManager.getLevel(level), blockSize: [0.4,0.2], vbo1: greenCube, vbo2: yellowCube, vbo3: redCube)
         blockGrid.position = [blockGrid.centralizedOriginX, 3, 0] // note: if position is updated more than once it breaks
         
-        blockFrame = BlockFrame(size: [Float(view.drawableSize.width*0.004),
+        blockFrame = BlockFrame(frame: [Float(view.drawableSize.width*0.004),
                                     Float(view.drawableSize.height*0.004)], vbo: blueCube)
+        
+        lifeMeter = LifeMeter(frame: [Float(view.drawableSize.width*0.004),
+                                      Float(view.drawableSize.height*0.004)], vbo: whiteCube, maxLife: 10)
         // --------------------
         // Setup nodes on scene
         // --------------------
@@ -62,6 +66,7 @@ class BreakoutScene : Scene {
         cubicBall = RectNode(position: ballInitPosition, size: [0.12,0.12], vbo: whiteCube)
         xVel = ballInitVelocity.x
         yVel = ballInitVelocity.y
+        lifeMeter.setExtraBalls(extraBalls)
         
         super.init(device: device, view: view)
         
@@ -69,6 +74,7 @@ class BreakoutScene : Scene {
         rootNode.addChild(cubicBall)
         rootNode.addChild(blockFrame)
         rootNode.addChild(blockGrid)
+        rootNode.addChild(lifeMeter)
     }
     
     override func update() {
@@ -117,6 +123,14 @@ class BreakoutScene : Scene {
                     case .right: xVel = -xVel
                     case .down: yVel = -yVel
                     }
+                    if blockGrid.children.count == 0 {
+                        // Destroyed all the blocks
+                        level += 1
+                        if level >= LevelManager.levels.count { level = 1 }
+                        buildLevel(level: LevelManager.getLevel(level))
+                        extraBalls += 1
+                        lifeMeter.setExtraBalls(extraBalls)
+                    }
                     return // return garantees to always hit only one block at a time
                 }
             }
@@ -138,14 +152,20 @@ class BreakoutScene : Scene {
     }
     
     func ballOut() {
-        life -= 1
-        if life == 0 {
-            level += 1
-            if level >= LevelManager.levels.count { level = 1 }
+        extraBalls -= 1
+        if extraBalls == -1 {
+            level = 1
             buildLevel(level: LevelManager.getLevel(level))
-            life = 5
+            extraBalls = 5
+            lifeMeter.setExtraBalls(extraBalls)
+            resetBall()
             return
         }
+        lifeMeter.setExtraBalls(extraBalls)
+        resetBall()
+    }
+    
+    func resetBall() {
         cubicBall.position = ballInitPosition
         let a: [Float] = [-1, 1]
         xVel = ballInitVelocity.x * a.randomElement()!
