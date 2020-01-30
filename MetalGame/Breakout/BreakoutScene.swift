@@ -89,7 +89,7 @@ class BreakoutScene : Scene {
         
         func paddleCollision() {
             if Collision.check(r1: paddle.rect, r2: cubicBall.rect) {
-                yVel = -yVel
+                yVel = abs(yVel)
             }
         }
         
