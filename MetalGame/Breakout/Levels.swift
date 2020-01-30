@@ -6,8 +6,34 @@
 //  Copyright © 2020 Alex Nascimento. All rights reserved.
 //
 
-struct Levels {
-    static let level1 = """
+struct LevelManager {
+    
+    static func getLevel(_ number: Int) -> String {
+        if number < 0 || number >= levels.count {
+            return levels[0]
+        } else { return levels[number] }
+    }
+    
+    static let levels: [String] = [
+    """
+    .......\
+    .......\
+    .......\
+    .......\
+    .......\
+    .......\
+    .......\
+    .......\
+    .......\
+    .......\
+    .......\
+    .......\
+    .......\
+    .......\
+    .......\
+    .......
+    """,
+    """
     .11111.\
     1132311\
     122.221\
@@ -24,9 +50,8 @@ struct Levels {
     .......\
     .......\
     .......
+    """,
     """
-    
-    static let level2 = """
     1111111\
     2.111.2\
     2.222.2\
@@ -44,4 +69,5 @@ struct Levels {
     .......\
     2222222
     """
+    ]
 }

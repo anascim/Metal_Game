@@ -10,7 +10,7 @@ import MetalKit
 
 class BreakoutScene : Scene {
     
-    let blockGrid: BlockGrid
+    var blockGrid: BlockGrid
     let blockFrame: BlockFrame
     let paddle: RectNode
     let cubicBall: RectNode
@@ -21,16 +21,16 @@ class BreakoutScene : Scene {
     let greenCube: CubeVBO
     let yellowCube: CubeVBO
     
-    // This plane is intended to be used to render the ball on the fragment shader
-//    let translucentPlane: TranslucentPlane
-    
     lazy var worldWidth = Float(view.drawableSize.width*0.004)
     lazy var worldHeight = Float(view.drawableSize.height*0.004)
     
-    var xVel: Float = 0.03
-    var yVel: Float = 0.02
+    var xVel: Float
+    var yVel: Float
     
-    
+    var level: Int = 1
+    var life: UInt8 = 5
+    let ballInitPosition: float3 = [0,-2,0]
+    let ballInitVelocity: float2 = [0.03, 0.02]
     
     override init(device: MTLDevice, view: MTKView) {
         
@@ -49,8 +49,7 @@ class BreakoutScene : Scene {
         yellowCube = CubeVBO(device: device,
                              vertices: Cube.buildVertices(topColor: [0.8,0.8,0,1], bottomColor: [0.4,0.4,0,1]))
         
-//        blockGrid = BlockGrid(device: device, position: [-1.2,3,0])
-        blockGrid = BlockGrid(position: [0,0,0], gridAspect: (7,16), layout: Levels.level2, blockSize: [0.4,0.2], vbo1: greenCube, vbo2: yellowCube, vbo3: redCube)
+        blockGrid = BlockGrid(position: [0,0,0], gridAspect: (7,16), layout: LevelManager.getLevel(level), blockSize: [0.4,0.2], vbo1: greenCube, vbo2: yellowCube, vbo3: redCube)
         blockGrid.position = [blockGrid.centralizedOriginX, 3, 0] // note: if position is updated more than once it breaks
         
         blockFrame = BlockFrame(size: [Float(view.drawableSize.width*0.004),
@@ -60,8 +59,9 @@ class BreakoutScene : Scene {
         // --------------------
         
         paddle = RectNode(position: [0,-3,0], size: [0.8,0.2], vbo: redCube)
-        cubicBall = RectNode(position: [0,-2,0], size: [0.12,0.12], vbo: whiteCube)
-        
+        cubicBall = RectNode(position: ballInitPosition, size: [0.12,0.12], vbo: whiteCube)
+        xVel = ballInitVelocity.x
+        yVel = ballInitVelocity.y
         
         super.init(device: device, view: view)
         
@@ -86,7 +86,9 @@ class BreakoutScene : Scene {
             if x + r > right { xVel = -abs(xVel) }
             if x - r < left { xVel = abs(xVel) }
             if y + r > top { yVel = -abs(yVel) }
-            if y - r < bottom { yVel = abs(yVel) }
+            if y - r < bottom {
+                ballOut()
+            }
         }
         
         func paddleCollision() {
@@ -115,7 +117,7 @@ class BreakoutScene : Scene {
                     case .right: xVel = -xVel
                     case .down: yVel = -yVel
                     }
-                    return // return garantees to always hit only one block
+                    return // return garantees to always hit only one block at a time
                 }
             }
         }
@@ -126,6 +128,28 @@ class BreakoutScene : Scene {
         
         cubicBall.position.x += xVel
         cubicBall.position.y += yVel
+    }
+    
+    func buildLevel(level: String) {
+        rootNode.removeChild(blockGrid)
+        blockGrid = BlockGrid(position: [0,0,0], gridAspect: (7,16), layout: level, blockSize: [0.4,0.2], vbo1: greenCube, vbo2: yellowCube, vbo3: redCube)
+        blockGrid.position = [blockGrid.centralizedOriginX, 3, 0] // note: if position is updated more than once it breaks
+        rootNode.addChild(blockGrid)
+    }
+    
+    func ballOut() {
+        life -= 1
+        if life == 0 {
+            level += 1
+            if level >= LevelManager.levels.count { level = 1 }
+            buildLevel(level: LevelManager.getLevel(level))
+            life = 5
+            return
+        }
+        cubicBall.position = ballInitPosition
+        let a: [Float] = [-1, 1]
+        xVel = ballInitVelocity.x * a.randomElement()!
+        yVel = ballInitVelocity.y
     }
     
     override func touchBegan(location: CGPoint) {
