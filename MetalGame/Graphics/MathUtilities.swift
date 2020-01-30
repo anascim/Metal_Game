@@ -11,41 +11,52 @@
 
 import simd
 
-extension matrix_float4x4 {
+func getAngle(_ p1: float2, _ p2: float2) -> Float {
+    return atan2f(p2.y - p1.y, p2.x - p1.x)
+}
+
+extension float4x4 {
     init(scaleBy s: Float) {
-        self.init(SIMD4<Float>(s, 0, 0, 0),
-                  SIMD4<Float>(0, s, 0, 0),
-                  SIMD4<Float>(0, 0, s, 0),
-                  SIMD4<Float>(0, 0, 0, 1))
+        self.init(float4(s, 0, 0, 0),
+                  float4(0, s, 0, 0),
+                  float4(0, 0, s, 0),
+                  float4(0, 0, 0, 1))
     }
     
-    init(rotationAbout axis: SIMD3<Float>, by radians: Float) {
+    init(scaleBy s: float3) {
+        self.init(float4(s[0],    0,    0, 0),
+                  float4(   0, s[1],    0, 0),
+                  float4(   0,    0, s[2], 0),
+                  float4(   0,    0,    0, 1))
+    }
+    
+    init(rotationAbout axis: float3, by radians: Float) {
         
         let c = cos(radians);
         let s = sin(radians);
         
-        let X = vector_float4(axis.x * axis.x + (1 - axis.x * axis.x) * c,
+        let X = float4(axis.x * axis.x + (1 - axis.x * axis.x) * c,
                               axis.x * axis.y * (1 - c) - axis.z * s,
                               axis.x * axis.z * (1 - c) + axis.y * s,
                               0.0)
-        let Y = vector_float4(axis.x * axis.y * (1 - c) + axis.z * s,
+        let Y = float4(axis.x * axis.y * (1 - c) + axis.z * s,
                               axis.y * axis.y + (1 - axis.y * axis.y) * c,
                               axis.y * axis.z * (1 - c) - axis.x * s,
                               0.0)
-        let Z = vector_float4(axis.x * axis.z * (1 - c) - axis.y * s,
+        let Z = float4(axis.x * axis.z * (1 - c) - axis.y * s,
                               axis.y * axis.z * (1 - c) + axis.x * s,
                               axis.z * axis.z + (1 - axis.z * axis.z) * c,
                               0.0)
-        let W = vector_float4(0.0, 0.0, 0.0, 1.0)
+        let W = float4(0.0, 0.0, 0.0, 1.0)
         
         self.init(X, Y, Z, W)
     }
     
-    init(translationBy t: SIMD3<Float>) {
-        self.init(SIMD4<Float>(   1,    0,    0, 0),
-                  SIMD4<Float>(   0,    1,    0, 0),
-                  SIMD4<Float>(   0,    0,    1, 0),
-                  SIMD4<Float>(t[0], t[1], t[2], 1))
+    init(translationBy t: float3) {
+        self.init(float4(   1,    0,    0, 0),
+                  float4(   0,    1,    0, 0),
+                  float4(   0,    0,    1, 0),
+                  float4(t[0], t[1], t[2], 1))
     }
     
     init(perspectiveProjectionFov fovRadians: Float, aspectRatio aspect: Float, nearZ: Float, farZ: Float) {
@@ -55,9 +66,9 @@ extension matrix_float4x4 {
         let zScale = -(farZ + nearZ) / zRange
         let wzScale = -2 * farZ * nearZ / zRange
         
-        self.init(SIMD4<Float>(xScale,  0,  0,  0),
-                  SIMD4<Float>( 0, yScale,  0,  0),
-                  SIMD4<Float>( 0,  0, zScale, -1),
-                  SIMD4<Float>( 0,  0, wzScale,  0))
+        self.init(float4(xScale,      0,      0,  0),
+                  float4(     0, yScale,      0,  0),
+                  float4(     0,      0, zScale, -1),
+                  float4(     0,      0, wzScale, 0))
     }
 }
