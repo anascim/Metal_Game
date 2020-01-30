@@ -83,12 +83,10 @@ class BreakoutScene : Scene {
             let top = blockFrame.top.position.y - blockFrame.top.size.height/2
             let bottom =  blockFrame.bottom.position.y + blockFrame.bottom.size.height/2
             
-            if x + r > right || x - r < left {
-                xVel = -xVel
-            }
-            if y + r > top || y - r < bottom {
-                yVel = -yVel
-            }
+            if x + r > right { xVel = -abs(xVel) }
+            if x - r < left { xVel = abs(xVel) }
+            if y + r > top { yVel = -abs(yVel) }
+            if y - r < bottom { yVel = abs(yVel) }
         }
         
         func paddleCollision() {
