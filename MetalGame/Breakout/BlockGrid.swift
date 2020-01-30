@@ -22,7 +22,7 @@ class BlockGrid : Node {
             }
         }
     }
-    var gridLayout: (UInt16, UInt16)
+    var gridAspect: (UInt16, UInt16)
     var blockWidth: Float
     var blockHeight: Float
     var xOffset: Float = 0.04
@@ -32,31 +32,46 @@ class BlockGrid : Node {
         return -totalWidth/2 + blockWidth/2 + xOffset
     }
     var totalWidth: Float {
-        return Float(gridLayout.0) * (blockWidth + xOffset)
+        return Float(gridAspect.0) * (blockWidth + xOffset)
     }
     var totalHeight: Float {
-        return Float(gridLayout.1) * (blockHeight + yOffset)
+        return Float(gridAspect.1) * (blockHeight + yOffset)
     }
     
     var vbo1: VertexBufferDelegate
-    var vbo2: VertexBufferDelegate?
-    var vbo3: VertexBufferDelegate?
+    var vbo2: VertexBufferDelegate
+    var vbo3: VertexBufferDelegate
     
-    init(position: float3, gridAspect: (UInt16, UInt16), blockSize: float2, vbo: VertexBufferDelegate) {
+    init(position: float3, gridAspect: (UInt16, UInt16), layout: String, blockSize: float2, vbo1: VertexBufferDelegate, vbo2: VertexBufferDelegate, vbo3: VertexBufferDelegate) {
         self.position = position
-        self.gridLayout = gridAspect
+        self.gridAspect = gridAspect
         self.blockWidth = blockSize.width
         self.blockHeight = blockSize.height
-        self.vbo1 = vbo
+        self.vbo1 = vbo1
+        self.vbo2 = vbo2
+        self.vbo3 = vbo3
         
         super.init()
         
-        for row in 0..<gridLayout.1 {
-            for col in 0..<gridLayout.0 {
+        let charArray = Array(layout)
+        for row in 0..<gridAspect.1 {
+            for col in 0..<gridAspect.0 {
                 
+                let charIndex = Int(row * gridAspect.0 + col)
+                var life: UInt8
+                switch charArray[charIndex] {
+                case "1":
+                    life = 1
+                case "2":
+                    life = 2
+                case "3":
+                    life = 3
+                default:
+                    continue
+                }
                 let newBlock = Block(position: [Float(col) * (blockWidth+xOffset),
                                                Float(row) * -(blockHeight+yOffset), 0],
-                                    size: [blockWidth, blockHeight], vbo: vbo1, life: 1)
+                                     size: [blockWidth, blockHeight], vbos: [vbo1, vbo2, vbo3], life: life)
                 addChild(newBlock)
             }
         }
@@ -67,15 +82,20 @@ class Block : RectNode {
     
     var life: UInt8
     
-    init(position: float3, size: float2, vbo: VertexBufferDelegate, life: UInt8) {
+    var vbos: [VertexBufferDelegate]
+    
+    init(position: float3, size: float2, vbos: [VertexBufferDelegate], life: UInt8) {
         self.life = life
-        super.init(position: position, size: size, vbo: vbo)
+        self.vbos = vbos
+        super.init(position: position, size: size, vbo: vbos[Int(life)-1])
     }
     
     public func takeHit() {
         life -= 1
         if life == 0 {
             self.removeFromParent()
+        } else {
+            self.vbo = vbos[Int(life)-1]
         }
     }
 }

@@ -26,7 +26,7 @@ class RectNode : Node {
     
     private var modelMatrix: float4x4
     
-    init(position: float3, size: float2, vbo: VertexBufferDelegate) {
+    init(position: float3, size: float2, vbo: VertexBufferDelegate?) {
         self.position = position
         self.size = size
         self.modelMatrix = matrix_identity_float4x4

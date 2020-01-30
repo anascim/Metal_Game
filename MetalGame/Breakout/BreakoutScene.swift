@@ -19,6 +19,7 @@ class BreakoutScene : Scene {
     let whiteCube: CubeVBO
     let blueCube: CubeVBO
     let greenCube: CubeVBO
+    let yellowCube: CubeVBO
     
     // This plane is intended to be used to render the ball on the fragment shader
 //    let translucentPlane: TranslucentPlane
@@ -28,6 +29,8 @@ class BreakoutScene : Scene {
     
     var xVel: Float = 0.03
     var yVel: Float = 0.02
+    
+    
     
     override init(device: MTLDevice, view: MTKView) {
         
@@ -43,10 +46,11 @@ class BreakoutScene : Scene {
                            vertices: Cube.buildVertices(topColor: [0,0,0.8,1], bottomColor: [0,0,0.4,1]))
         greenCube = CubeVBO(device: device,
                             vertices: Cube.buildVertices(topColor: [0,0.8,0,1], bottomColor: [0,0.4,0,1]))
-        
+        yellowCube = CubeVBO(device: device,
+                             vertices: Cube.buildVertices(topColor: [0.8,0.8,0,1], bottomColor: [0.4,0.4,0,1]))
         
 //        blockGrid = BlockGrid(device: device, position: [-1.2,3,0])
-        blockGrid = BlockGrid(position: [0,0,0], gridAspect: (7,16), blockSize: [0.4,0.2], vbo: greenCube)
+        blockGrid = BlockGrid(position: [0,0,0], gridAspect: (7,16), layout: Levels.level2, blockSize: [0.4,0.2], vbo1: greenCube, vbo2: yellowCube, vbo3: redCube)
         blockGrid.position = [blockGrid.centralizedOriginX, 3, 0] // note: if position is updated more than once it breaks
         
         blockFrame = BlockFrame(size: [Float(view.drawableSize.width*0.004),
