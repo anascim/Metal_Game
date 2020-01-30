@@ -46,7 +46,9 @@ class BreakoutScene : Scene {
         
         
 //        blockGrid = BlockGrid(device: device, position: [-1.2,3,0])
-        blockGrid = BlockGrid(position: [-1.2,3,0], gridAspect: (7,16), blockSize: [0.4,0.2], vbo: greenCube)
+        blockGrid = BlockGrid(position: [0,0,0], gridAspect: (7,16), blockSize: [0.4,0.2], vbo: greenCube)
+        blockGrid.position = [blockGrid.centralizedOriginX, 3, 0] // note: if position is updated more than once it breaks
+        
         blockFrame = BlockFrame(size: [Float(view.drawableSize.width*0.004),
                                     Float(view.drawableSize.height*0.004)], vbo: blueCube)
         // --------------------

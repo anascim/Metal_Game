@@ -29,6 +29,11 @@ class ViewController: UIViewController {
             return
         }
         
+        print("atan2f(1,0): \(atan2f(1, 0))")
+        print("atan2f(0,1): \(atan2f(0, 1))")
+        print("atan2f(-1,0): \(atan2f(-1, 0))")
+        print("atan2f(0,-1): \(atan2f(0, -1))")
+        
         mtkView.device = defaultDevice
         mtkView.colorPixelFormat = .bgra8Unorm
         mtkView.depthStencilPixelFormat = .depth32Float

@@ -14,10 +14,29 @@ import MetalKit
 
 class BlockGrid : Node {
     
-    var position: float3
+    // Short term solution. TODO: Have this integrate with transform instead.
+    var position: float3 {
+        didSet {
+            for c in children as! [Block] {
+                c.position = c.position + self.position
+            }
+        }
+    }
     var gridLayout: (UInt16, UInt16)
     var blockWidth: Float
     var blockHeight: Float
+    var xOffset: Float = 0.04
+    var yOffset: Float = 0.04
+    
+    var centralizedOriginX: Float {
+        return -totalWidth/2 + blockWidth/2 + xOffset
+    }
+    var totalWidth: Float {
+        return Float(gridLayout.0) * (blockWidth + xOffset)
+    }
+    var totalHeight: Float {
+        return Float(gridLayout.1) * (blockHeight + yOffset)
+    }
     
     var vbo1: VertexBufferDelegate
     var vbo2: VertexBufferDelegate?
@@ -35,8 +54,8 @@ class BlockGrid : Node {
         for row in 0..<gridLayout.1 {
             for col in 0..<gridLayout.0 {
                 
-                let newBlock = Block(position: [Float(col) * blockWidth + position[0],
-                                               Float(row) * -blockHeight + position[1], 0],
+                let newBlock = Block(position: [Float(col) * (blockWidth+xOffset),
+                                               Float(row) * -(blockHeight+yOffset), 0],
                                     size: [blockWidth, blockHeight], vbo: vbo1, life: 1)
                 addChild(newBlock)
             }

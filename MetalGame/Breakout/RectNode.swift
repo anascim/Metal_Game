@@ -10,7 +10,9 @@ import MetalKit
 
 class RectNode : Node {
     
-    var position: float3 { didSet { updateTransform() } }
+    var position: float3 {
+        didSet { updateTransform() }
+    }
     var size: float2 { didSet { updateTransform() } }
     var rect: float4 {
         get {
