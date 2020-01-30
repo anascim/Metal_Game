@@ -86,18 +86,28 @@ class BreakoutScene : Scene {
         }
         
         func paddleCollision() {
-            let right = paddle.position.x + paddle.size.width/2
-            let left = paddle.position.x - paddle.size.width/2
-            let top = paddle.position.y + paddle.size.height/2
-            let bottom = paddle.position.y - paddle.size.height/2
-            
-            if x + r > left && x - r < right && y + r > bottom && y - r < top {
+            if Collision.check(r1: paddle.rect, r2: cubicBall.rect) {
                 yVel = -yVel
+            }
+        }
+        
+        func blocksCollision() {
+            for b in blockGrid.children as! [Block] {
+                if Collision.check(r1: cubicBall.rect, r2: b.rect) {
+                    b.takeHit()
+                    switch Collision.checkDirection(subject: cubicBall.rect, target: b.rect, velocity: [xVel, yVel]) {
+                    case .left: xVel = -xVel
+                    case .up: yVel = -yVel
+                    case .right: xVel = -xVel
+                    case .down: yVel = -yVel
+                    }; return // return garantees to always hit only one block
+                }
             }
         }
         
         frameCollision()
         paddleCollision()
+        blocksCollision()
         
         cubicBall.position.x += xVel
         cubicBall.position.y += yVel

@@ -23,8 +23,6 @@ class BlockGrid : Node {
     var vbo2: VertexBufferDelegate?
     var vbo3: VertexBufferDelegate?
     
-    var blocks = [Block]()
-    
     init(position: float3, gridAspect: (UInt16, UInt16), blockSize: float2, vbo: VertexBufferDelegate) {
         self.position = position
         self.gridLayout = gridAspect
@@ -40,17 +38,7 @@ class BlockGrid : Node {
                 let newBlock = Block(position: [Float(col) * blockWidth + position[0],
                                                Float(row) * -blockHeight + position[1], 0],
                                     size: [blockWidth, blockHeight], vbo: vbo1, life: 1)
-                blocks.append(newBlock)
                 addChild(newBlock)
-            }
-        }
-    }
-    
-    func checkForCollisions(rect: float4) {
-        for b in blocks {
-            if Collision.check(r1: rect, r2: b.rect) {
-                // collided with block
-                b.life -= 1
             }
         }
     }
@@ -63,6 +51,13 @@ class Block : RectNode {
     init(position: float3, size: float2, vbo: VertexBufferDelegate, life: UInt8) {
         self.life = life
         super.init(position: position, size: size, vbo: vbo)
+    }
+    
+    public func takeHit() {
+        life -= 1
+        if life == 0 {
+            self.removeFromParent()
+        }
     }
 }
 

@@ -42,8 +42,6 @@ class Renderer : NSObject {
         standardPipeline = StandardPipeline(device: device, view: view)
         viewProjectionMatrix = ViewProjection.buildViewProjectionMatrix(mtkView: view)
         
-        scene = BreakoutScene(device: device, view: view)
-        
         super.init()
     }
 }

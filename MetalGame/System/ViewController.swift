@@ -36,6 +36,7 @@ class ViewController: UIViewController {
         
         renderer = Renderer(mtkView: mtkView)
         mtkView.delegate = renderer
+        renderer.scene = BreakoutScene(device: defaultDevice, view: mtkView)
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {

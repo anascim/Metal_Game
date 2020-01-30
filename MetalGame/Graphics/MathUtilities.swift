@@ -11,7 +11,7 @@
 
 import simd
 
-func getAngle(_ p1: float2, _ p2: float3) -> Float {
+func getAngle(_ p1: float2, _ p2: float2) -> Float {
     return atan2f(p2.y - p1.y, p2.x - p1.x)
 }
 
