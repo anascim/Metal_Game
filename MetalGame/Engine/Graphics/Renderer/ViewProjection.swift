@@ -8,7 +8,7 @@
 
 import MetalKit
 
-/// This is a static class for building view-projectino matrices.
+/// This is a static class for building view-projection matrices.
 /// It's not recommended to instantiate this.
 
 class ViewProjection {

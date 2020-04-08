@@ -19,14 +19,13 @@ class ViewController: UIViewController {
         super.viewDidLoad()
         
         guard let mtkView = view as? MTKView else {
-            print("View is not an MTKView!")
-            return
+            fatalError("View is not an MTKView!")
         }
+        
         self.mtkView = mtkView
         
         guard let defaultDevice = MTLCreateSystemDefaultDevice() else {
-            print("Metal not supported!")
-            return
+            fatalError("Metal not supported on this device!")
         }
         
         mtkView.device = defaultDevice

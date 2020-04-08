@@ -1,5 +1,5 @@
 //
-//  CubeVBO.swift
+//  PlaneVBO.swift
 //  MetalGame
 //
 //  Created by Alex Nascimento on 24/01/20.
@@ -8,28 +8,28 @@
 
 import MetalKit
 
-class CubeVBO : VertexBufferDelegate {
+class PlaneVBO : VertexBufferDelegate {
     
     var device: MTLDevice
     var vertexBuffer: MTLBuffer!
     var indexBuffer: MTLBuffer!
-    var vertices: [Vertex]!
-    var indices: [UInt16]!
+    var vertices: [Vertex]
+    var indices: [UInt16]
     
     required init(device: MTLDevice, vertices: [Vertex]) {
         self.device = device
-        buildBuffers(vertices)
+        self.vertices = vertices
+        self.indices = Plane.buildIndices()
+        buildBuffers()
     }
     
-    func buildBuffers(_ vertices: [Vertex]) {
-        self.vertices = vertices
-        self.indices = Cube.buildIndices()
-
+    func buildBuffers() {
         if let buffer = device.makeBuffer(bytes: vertices,
                          length: MemoryLayout<Vertex>.stride * vertices.count,
                          options: .cpuCacheModeWriteCombined) {
            vertexBuffer = buffer
         } else { fatalError("CubeVBO:buildBuffers Couldn't make buffer!") }
+        
         if let buffer = device.makeBuffer(bytes: indices,
                                          length: MemoryLayout<UInt16>.stride * indices.count,
                                          options: .cpuCacheModeWriteCombined) {

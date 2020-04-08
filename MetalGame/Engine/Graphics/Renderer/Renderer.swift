@@ -14,7 +14,7 @@ import MetalKit
 /// The Renderer is the system used to render a single scene on the screen.
 /// It implements the MTKViewDelegate protocol, which is responsible for making the draw calls for the view.
 
-class Renderer : NSObject {
+class Renderer: NSObject {
    
     let device: MTLDevice
     let view: MTKView
@@ -46,7 +46,7 @@ class Renderer : NSObject {
     }
 }
 
-extension Renderer : MTKViewDelegate {
+extension Renderer: MTKViewDelegate {
     
     func draw(in view: MTKView) {
         time += 1.0/Float(view.preferredFramesPerSecond)

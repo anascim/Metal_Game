@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		8C02230F23D00F5700CB30AE /* Shaders.metal in Sources */ = {isa = PBXBuildFile; fileRef = 8C02230E23D00F5700CB30AE /* Shaders.metal */; };
+		8C02230F23D00F5700CB30AE /* PassThroughShader.metal in Sources */ = {isa = PBXBuildFile; fileRef = 8C02230E23D00F5700CB30AE /* PassThroughShader.metal */; };
 		8C02231123D0DE2800CB30AE /* MathUtilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C02231023D0DE2800CB30AE /* MathUtilities.swift */; };
 		8C03EEF323D512900015C975 /* Types.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C03EEF223D512900015C975 /* Types.swift */; };
 		8C52AF9123D395BE0045D07E /* Scene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C52AF9023D395BE0045D07E /* Scene.swift */; };
@@ -38,7 +38,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		8C02230E23D00F5700CB30AE /* Shaders.metal */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.metal; path = Shaders.metal; sourceTree = "<group>"; };
+		8C02230E23D00F5700CB30AE /* PassThroughShader.metal */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.metal; path = PassThroughShader.metal; sourceTree = "<group>"; };
 		8C02231023D0DE2800CB30AE /* MathUtilities.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MathUtilities.swift; sourceTree = "<group>"; };
 		8C03EEF223D512900015C975 /* Types.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Types.swift; sourceTree = "<group>"; };
 		8C52AF9023D395BE0045D07E /* Scene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Scene.swift; sourceTree = "<group>"; };
@@ -81,7 +81,16 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		8C52AF9823D396E90045D07E /* System */ = {
+		8C235F7B243E3FDC00D8A9C3 /* Engine */ = {
+			isa = PBXGroup;
+			children = (
+				8CE8C47523DA3F3F000AEC41 /* Graphics */,
+				8CE8C47623DA3F70000AEC41 /* Nodes */,
+			);
+			path = Engine;
+			sourceTree = "<group>";
+		};
+		8C52AF9823D396E90045D07E /* Application */ = {
 			isa = PBXGroup;
 			children = (
 				8C9D000323C40FE300864E03 /* AppDelegate.swift */,
@@ -91,7 +100,34 @@
 				8C9D001123C40FE900864E03 /* LaunchScreen.storyboard */,
 				8C9D001423C40FE900864E03 /* Info.plist */,
 			);
-			path = System;
+			path = Application;
+			sourceTree = "<group>";
+		};
+		8C68F5CF243E789600BD2A09 /* Shaders */ = {
+			isa = PBXGroup;
+			children = (
+				8C02230E23D00F5700CB30AE /* PassThroughShader.metal */,
+			);
+			path = Shaders;
+			sourceTree = "<group>";
+		};
+		8C68F5D0243E78EC00BD2A09 /* Renderer */ = {
+			isa = PBXGroup;
+			children = (
+				8C9D001E23CFC39F00864E03 /* Renderer.swift */,
+				8CB9885623DA6B6700023B8D /* StandardPipeline.swift */,
+				8CB9885823DA6EA100023B8D /* ViewProjection.swift */,
+			);
+			path = Renderer;
+			sourceTree = "<group>";
+		};
+		8C88B21E243E49BA007B29F1 /* Utils */ = {
+			isa = PBXGroup;
+			children = (
+				8C02231023D0DE2800CB30AE /* MathUtilities.swift */,
+				8C03EEF223D512900015C975 /* Types.swift */,
+			);
+			path = Utils;
 			sourceTree = "<group>";
 		};
 		8C9D000123C40FE300864E03 /* Products */ = {
@@ -105,11 +141,9 @@
 		8C9D000223C40FE300864E03 /* MetalGame */ = {
 			isa = PBXGroup;
 			children = (
-				8C52AF9823D396E90045D07E /* System */,
-				8CE8C47523DA3F3F000AEC41 /* Graphics */,
-				8CE8C47723DA3F8B000AEC41 /* Renderable */,
-				8CF2F6FA23DA345D0055B834 /* Geometry */,
-				8CE8C47623DA3F70000AEC41 /* Nodes */,
+				8C52AF9823D396E90045D07E /* Application */,
+				8C235F7B243E3FDC00D8A9C3 /* Engine */,
+				8C9C6B9123E2679600978D02 /* Collision.swift */,
 				8CC64E1F23DBCE6500B861BC /* Breakout */,
 			);
 			path = MetalGame;
@@ -133,7 +167,6 @@
 				8C9C6B9723E3885100978D02 /* LifeMeter.swift */,
 				8C9C6B9323E34BA600978D02 /* Levels.swift */,
 				8CC64E1B23DBCB0200B861BC /* TranslucentPlane.swift */,
-				8C9C6B9123E2679600978D02 /* Collision.swift */,
 			);
 			path = Breakout;
 			sourceTree = "<group>";
@@ -141,12 +174,11 @@
 		8CE8C47523DA3F3F000AEC41 /* Graphics */ = {
 			isa = PBXGroup;
 			children = (
-				8C9D001E23CFC39F00864E03 /* Renderer.swift */,
-				8CB9885623DA6B6700023B8D /* StandardPipeline.swift */,
-				8C02230E23D00F5700CB30AE /* Shaders.metal */,
-				8C02231023D0DE2800CB30AE /* MathUtilities.swift */,
-				8C03EEF223D512900015C975 /* Types.swift */,
-				8CB9885823DA6EA100023B8D /* ViewProjection.swift */,
+				8C68F5D0243E78EC00BD2A09 /* Renderer */,
+				8C68F5CF243E789600BD2A09 /* Shaders */,
+				8CE8C47723DA3F8B000AEC41 /* VBOs */,
+				8CF2F6FA23DA345D0055B834 /* Geometry */,
+				8C88B21E243E49BA007B29F1 /* Utils */,
 			);
 			path = Graphics;
 			sourceTree = "<group>";
@@ -154,21 +186,21 @@
 		8CE8C47623DA3F70000AEC41 /* Nodes */ = {
 			isa = PBXGroup;
 			children = (
+				8CE8C47823DA3FB6000AEC41 /* Renderable.swift */,
 				8C52AF9023D395BE0045D07E /* Scene.swift */,
 				8CB9885C23DB7E8900023B8D /* Node.swift */,
 			);
 			path = Nodes;
 			sourceTree = "<group>";
 		};
-		8CE8C47723DA3F8B000AEC41 /* Renderable */ = {
+		8CE8C47723DA3F8B000AEC41 /* VBOs */ = {
 			isa = PBXGroup;
 			children = (
-				8CE8C47823DA3FB6000AEC41 /* Renderable.swift */,
 				8CC64E1523DB8F0600B861BC /* VertexBufferDelegate.swift */,
 				8CC64E1723DB8FF500B861BC /* CubeVBO.swift */,
 				8CC64E2023DBCF0300B861BC /* PlaneVBO.swift */,
 			);
-			path = Renderable;
+			path = VBOs;
 			sourceTree = "<group>";
 		};
 		8CF2F6FA23DA345D0055B834 /* Geometry */ = {
@@ -252,7 +284,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				8C02230F23D00F5700CB30AE /* Shaders.metal in Sources */,
+				8C02230F23D00F5700CB30AE /* PassThroughShader.metal in Sources */,
 				8C9D000923C40FE400864E03 /* ViewController.swift in Sources */,
 				8CB9885D23DB7E8900023B8D /* Node.swift in Sources */,
 				8C52AF9123D395BE0045D07E /* Scene.swift in Sources */,
@@ -423,7 +455,8 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 3;
 				DEVELOPMENT_TEAM = PVKHG959FC;
-				INFOPLIST_FILE = MetalGame/System/Info.plist;
+				INFOPLIST_FILE = MetalGame/Application/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.4;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -443,7 +476,8 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 3;
 				DEVELOPMENT_TEAM = PVKHG959FC;
-				INFOPLIST_FILE = MetalGame/System/Info.plist;
+				INFOPLIST_FILE = MetalGame/Application/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.4;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",

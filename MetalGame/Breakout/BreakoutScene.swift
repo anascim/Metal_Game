@@ -57,6 +57,7 @@ class BreakoutScene : Scene {
         blockFrame = BlockFrame(frame: Vec2(worldWidth, worldHeight), vbo: blueCube)
         
         lifeMeter = LifeMeter(frame: Vec2(worldWidth, worldHeight), vbo: whiteCube, maxLife: 10)
+        
         // --------------------
         // Setup nodes on scene
         // --------------------

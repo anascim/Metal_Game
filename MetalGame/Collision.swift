@@ -12,6 +12,7 @@ enum Direction {
     case left
     case right
 }
+
 class Collision {
     
     /// Checks if two rectangles are colliding.

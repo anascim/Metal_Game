@@ -16,10 +16,10 @@ protocol VertexBufferDelegate {
     var device: MTLDevice { get set }
     var vertexBuffer: MTLBuffer! { get set }
     var indexBuffer: MTLBuffer! { get set }
-    var vertices: [Vertex]! { get set }
-    var indices: [UInt16]! { get set }
+    var vertices: [Vertex] { get set }
+    var indices: [UInt16] { get set }
     
     init(device: MTLDevice, vertices: [Vertex])
     
-    func buildBuffers(_ vertices: [Vertex])
+    func buildBuffers()
 }
