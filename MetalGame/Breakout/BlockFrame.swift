@@ -12,18 +12,18 @@ import MetalKit
 
 class BlockFrame : Node {
     
-    var frame: float2
+    var frame: Vec2
     let left: RectNode
     let right: RectNode
     let top: RectNode
     let bottom: RectNode
     
-    init(frame: float2, vbo: VertexBufferDelegate) {
+    init(frame: Vec2, vbo: VertexBufferDelegate) {
         self.frame = frame
-        left = RectNode(position: [-frame.width/2,0,0], size: [0.05,100], vbo: vbo)
-        right = RectNode(position: [frame.width/2,0,0], size: [0.05,100], vbo: vbo)
-        top = RectNode(position: [0,frame.height/2,0], size: [100,0.05], vbo: vbo)
-        bottom = RectNode(position: [0,-frame.height/2,0], size: [100,0.05], vbo: nil)
+        left = RectNode(position: Vec3(-frame.width/2,0,0), size: Vec2(0.05,100), vbo: vbo)
+        right = RectNode(position: Vec3(frame.width/2,0,0), size: Vec2(0.05,100), vbo: vbo)
+        top = RectNode(position: Vec3(0,frame.height/2,0), size: Vec2(100,0.05), vbo: vbo)
+        bottom = RectNode(position: Vec3(0,-frame.height/2,0), size: Vec2(100,0.05), vbo: nil)
         
         super.init()
         

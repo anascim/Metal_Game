@@ -15,12 +15,12 @@ class TranslucentPlane : Renderable {
        var vertexBufferDelegate: VertexBufferDelegate?
        
        /// The center of the frame, defaluts to [0,0,0]
-       var position: float3
+       var position: Vec3
        
        /// The size of the frame: [width, height]
-       var size: float2
+       var size: Vec2
        
-       init(device: MTLDevice, position: float3 = [0,0,0], size: float2) {
+       init(device: MTLDevice, position: Vec3 = Vec3(0,0,0), size: Vec2) {
            self.device = device
            self.position = position
            self.size = size
@@ -29,10 +29,10 @@ class TranslucentPlane : Renderable {
        public func render(commandEncoder: MTLRenderCommandEncoder, viewProjectionMatrix: float4x4, time: Float) {
            guard let delegate = vertexBufferDelegate else { return }
            
-           let modelMatrix1 = float4x4(translationBy: [0,size[1]/2,0]) * float4x4(scaleBy: [100, 0.05, 0.05])
-           let modelMatrix2 = float4x4(translationBy: [0,-size[1]/2,0]) * float4x4(scaleBy: [100, 0.05, 0.05])
-           let modelMatrix3 = float4x4(translationBy: [-size[0]/2,0,0]) * float4x4(scaleBy: [0.05, 100, 0.05])
-           let modelMatrix4 = float4x4(translationBy: [size[0]/2,0,0]) * float4x4(scaleBy: [0.05, 100, 0.05])
+        let modelMatrix1 = float4x4(translationBy: Vec3(0,size.height/2,0)) * float4x4(scaleBy: Vec3(100, 0.05, 0.05))
+        let modelMatrix2 = float4x4(translationBy: Vec3(0,-size.height/2,0)) * float4x4(scaleBy: Vec3(100, 0.05, 0.05))
+        let modelMatrix3 = float4x4(translationBy: Vec3(-size.width/2,0,0)) * float4x4(scaleBy: Vec3(0.05, 100, 0.05))
+        let modelMatrix4 = float4x4(translationBy: Vec3(size.width/2,0,0)) * float4x4(scaleBy: Vec3(0.05, 100, 0.05))
            let modelMtxs = [modelMatrix1, modelMatrix2, modelMatrix3, modelMatrix4]
            
            for m in modelMtxs {

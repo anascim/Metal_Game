@@ -13,7 +13,7 @@ import simd
 
 let PI = Float.pi
 
-func getAngle(_ p1: float2, _ p2: float2) -> Float {
+func getAngle(_ p1: Vec2, _ p2: Vec2) -> Float {
     return atan2f(p2.y - p1.y, p2.x - p1.x)
 }
 
@@ -25,14 +25,14 @@ extension float4x4 {
                   float4(0, 0, 0, 1))
     }
     
-    init(scaleBy s: float3) {
-        self.init(float4(s[0],    0,    0, 0),
-                  float4(   0, s[1],    0, 0),
-                  float4(   0,    0, s[2], 0),
+    init(scaleBy s: Vec3) {
+        self.init(float4(s.x,    0,    0, 0),
+                  float4(   0, s.y,    0, 0),
+                  float4(   0,    0, s.z, 0),
                   float4(   0,    0,    0, 1))
     }
     
-    init(rotationAbout axis: float3, by radians: Float) {
+    init(rotationAbout axis: Vec3, by radians: Float) {
         
         let c = cos(radians);
         let s = sin(radians);
@@ -54,11 +54,11 @@ extension float4x4 {
         self.init(X, Y, Z, W)
     }
     
-    init(translationBy t: float3) {
+    init(translationBy t: Vec3) {
         self.init(float4(   1,    0,    0, 0),
                   float4(   0,    1,    0, 0),
                   float4(   0,    0,    1, 0),
-                  float4(t[0], t[1], t[2], 1))
+                  float4(t.x, t.y, t.z, 1))
     }
     
     init(perspectiveProjectionFov fovRadians: Float, aspectRatio aspect: Float, nearZ: Float, farZ: Float) {

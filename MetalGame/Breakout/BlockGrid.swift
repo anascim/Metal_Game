@@ -15,7 +15,7 @@ import MetalKit
 class BlockGrid : Node {
     
     // Short term solution. TODO: Have this integrate with transform instead.
-    var position: float3 {
+    var position: Vec3 {
         didSet {
             for c in children as! [Block] {
                 c.position = c.position + self.position
@@ -42,7 +42,7 @@ class BlockGrid : Node {
     var vbo2: VertexBufferDelegate
     var vbo3: VertexBufferDelegate
     
-    init(position: float3, gridAspect: (UInt16, UInt16), layout: String, blockSize: float2, vbo1: VertexBufferDelegate, vbo2: VertexBufferDelegate, vbo3: VertexBufferDelegate) {
+    init(position: Vec3, gridAspect: (UInt16, UInt16), layout: String, blockSize: Vec2, vbo1: VertexBufferDelegate, vbo2: VertexBufferDelegate, vbo3: VertexBufferDelegate) {
         self.position = position
         self.gridAspect = gridAspect
         self.blockWidth = blockSize.width
@@ -69,9 +69,9 @@ class BlockGrid : Node {
                 default:
                     continue
                 }
-                let newBlock = Block(position: [Float(col) * (blockWidth+xOffset),
-                                               Float(row) * -(blockHeight+yOffset), 0],
-                                     size: [blockWidth, blockHeight], vbos: [vbo1, vbo2, vbo3], life: life)
+                let newBlock = Block(position: Vec3(Float(col) * (blockWidth+xOffset),
+                                               Float(row) * -(blockHeight+yOffset), 0),
+                                     size: Vec2(blockWidth, blockHeight), vbos: [vbo1, vbo2, vbo3], life: life)
                 addChild(newBlock)
             }
         }
@@ -84,7 +84,7 @@ class Block : RectNode {
     
     var vbos: [VertexBufferDelegate]
     
-    init(position: float3, size: float2, vbos: [VertexBufferDelegate], life: UInt8) {
+    init(position: Vec3, size: Vec2, vbos: [VertexBufferDelegate], life: UInt8) {
         self.life = life
         self.vbos = vbos
         super.init(position: position, size: size, vbo: vbos[Int(life)-1])

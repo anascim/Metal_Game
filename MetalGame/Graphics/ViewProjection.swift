@@ -14,7 +14,7 @@ import MetalKit
 class ViewProjection {
     
     static func buildViewProjectionMatrix(mtkView: MTKView) -> float4x4 {
-        let cameraTranslation = float3(0, 0,-5)
+        let cameraTranslation = Vec3(0, 0,-5)
         let viewMatrix = float4x4(translationBy: cameraTranslation)
         
         let aspect: Float  = Float(mtkView.drawableSize.width / mtkView.drawableSize.height)
@@ -27,7 +27,7 @@ class ViewProjection {
         return viewProjectionMatrix
     }
     
-    static func buildViewProjectionMatrix(mtkView: MTKView, cameraTranslation: float3, fov: Float, near: Float, far: Float) -> float4x4 {
+    static func buildViewProjectionMatrix(mtkView: MTKView, cameraTranslation: Vec3, fov: Float, near: Float, far: Float) -> float4x4 {
         let viewMatrix = float4x4(translationBy: cameraTranslation)
         
         let aspect: Float  = Float(mtkView.drawableSize.width / mtkView.drawableSize.height)

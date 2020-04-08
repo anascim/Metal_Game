@@ -31,8 +31,8 @@ class BreakoutScene : Scene {
     var level: Int = 1
     var extraBalls: Int = 5
     let maxBalls: Int = 10
-    let ballInitPosition: float3 = [0,-2,0]
-    let ballInitVelocity: float2 = [0.03, 0.02]
+    let ballInitPosition = Vec3(0,-2,0)
+    let ballInitVelocity = Vec2(0.03, 0.02)
     
     override init(device: MTLDevice, view: MTKView) {
         
@@ -51,18 +51,18 @@ class BreakoutScene : Scene {
         yellowCube = CubeVBO(device: device,
                              vertices: Cube.buildVertices(topColor: [0.8,0.8,0,1], bottomColor: [0.4,0.4,0,1]))
         
-        blockGrid = BlockGrid(position: [0,0,0], gridAspect: (7,16), layout: LevelManager.getLevel(level), blockSize: [0.4,0.2], vbo1: greenCube, vbo2: yellowCube, vbo3: redCube)
-        blockGrid.position = [blockGrid.centralizedOriginX, 3, 0] // note: if position is updated more than once it breaks
+        blockGrid = BlockGrid(position: Vec3(0,0,0), gridAspect: (7,16), layout: LevelManager.getLevel(level), blockSize: Vec2(0.4,0.2), vbo1: greenCube, vbo2: yellowCube, vbo3: redCube)
+        blockGrid.position = Vec3(blockGrid.centralizedOriginX, 3, 0) // note: if position is updated more than once it breaks
         
-        blockFrame = BlockFrame(frame: [worldWidth, worldHeight], vbo: blueCube)
+        blockFrame = BlockFrame(frame: Vec2(worldWidth, worldHeight), vbo: blueCube)
         
-        lifeMeter = LifeMeter(frame: [worldWidth, worldHeight], vbo: whiteCube, maxLife: 10)
+        lifeMeter = LifeMeter(frame: Vec2(worldWidth, worldHeight), vbo: whiteCube, maxLife: 10)
         // --------------------
         // Setup nodes on scene
         // --------------------
         
-        paddle = RectNode(position: [0,-3,0], size: [0.8,0.2], vbo: redCube)
-        cubicBall = RectNode(position: ballInitPosition, size: [0.12,0.12], vbo: whiteCube)
+        paddle = RectNode(position: Vec3(0,-3,0), size: Vec2(0.8,0.2), vbo: redCube)
+        cubicBall = RectNode(position: ballInitPosition, size: Vec2(0.12,0.12), vbo: whiteCube)
         xVel = ballInitVelocity.x
         yVel = ballInitVelocity.y
         lifeMeter.setExtraBalls(extraBalls)
@@ -116,7 +116,7 @@ class BreakoutScene : Scene {
             for b in blockGrid.children as! [Block] {
                 if Collision.check(r1: cubicBall.rect, r2: b.rect) {
                     b.takeHit()
-                    switch Collision.checkDirection(subject: cubicBall.rect, target: b.rect, velocity: [xVel, yVel]) {
+                    switch Collision.checkDirection(subject: cubicBall.rect, target: b.rect, velocity: Vec2(xVel, yVel)) {
                     case .left: xVel = -xVel
                     case .up: yVel = -yVel
                     case .right: xVel = -xVel
@@ -145,8 +145,8 @@ class BreakoutScene : Scene {
     
     func buildLevel(level: String) {
         rootNode.removeChild(blockGrid)
-        blockGrid = BlockGrid(position: [0,0,0], gridAspect: (7,16), layout: level, blockSize: [0.4,0.2], vbo1: greenCube, vbo2: yellowCube, vbo3: redCube)
-        blockGrid.position = [blockGrid.centralizedOriginX, 3, 0] // note: if position is updated more than once it breaks
+        blockGrid = BlockGrid(position: Vec3(0,0,0), gridAspect: (7,16), layout: level, blockSize: Vec2(0.4,0.2), vbo1: greenCube, vbo2: yellowCube, vbo3: redCube)
+        blockGrid.position = Vec3(blockGrid.centralizedOriginX, 3, 0) // note: if position is updated more than once it breaks
         rootNode.addChild(blockGrid)
     }
     
@@ -173,19 +173,14 @@ class BreakoutScene : Scene {
     
     override func touchBegan(location: CGPoint) {
         let pctx = Float(location.x / view.frame.width)
-        let relativePosX = pctx * worldWidth - worldWidth/2
-        paddle.position[0] = Float(relativePosX)
+        let relativePosX = Float(pctx * worldWidth - worldWidth/2)
+        paddle.position.x = relativePosX
 //      print("relativePosX: \(relativePosX), location: \(location), pctx: \(pctx), frameWidth: \(view.frame.width)")
-        level += 1
-        if level >= LevelManager.levels.count { level = 1 }
-        buildLevel(level: LevelManager.getLevel(level))
-        extraBalls += 1
-        lifeMeter.setExtraBalls(extraBalls)
     }
     
     override func touchMoved(location: CGPoint) {
         let pctx = Float(location.x / view.frame.width)
         let relativePosX = pctx * worldWidth - worldWidth/2
-        paddle.position[0] = Float(relativePosX)
+        paddle.position.x = Float(relativePosX)
     }
 }
